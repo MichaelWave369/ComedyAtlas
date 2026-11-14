@@ -41,3 +41,21 @@ test("Rhythm notebook sends local changes to the audio overlay",()=>{
   assert.ok(rhythm.includes('comedyatlas:rhythms-updated'));
   assert.ok(read("src/audio-lab.mjs").includes('comedyatlas:rhythms-updated'));
 });
+
+test("Pattern lab links to its UI and dynamically updates with local rhythm changes",()=>{
+  const lab=read("src/pattern-lab.mjs");
+  const ids=new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]));
+  const targets=[...lab.matchAll(/\$\("([^"]+)"\)/g)].map(x=>x[1]);
+  for(const id of targets)assert.ok(ids.has(id),"Missing pattern control: "+id);
+  assert.ok(html.includes('href="#patterns"'));
+  assert.ok(app.includes('import { mountPatternLab } from "./pattern-lab.mjs"'));
+  assert.ok(app.includes("mountPatternLab()"));
+  assert.ok(lab.includes("comedyatlas:rhythms-updated"));
+});
+
+test("the pattern page has a dedicated accessible explanation of its score",()=>{
+  assert.ok(html.includes("STRUCTURAL RESEMBLANCE"));
+  assert.ok(html.includes("Original fictional examples"));
+  assert.ok(html.includes("human-annotated"));
+  assert.ok(html.includes('id="pattern-score"'));
+});

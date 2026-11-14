@@ -121,9 +121,10 @@ export function mountPatternLab(){
     $("pattern-cohort-note").textContent=cohort==="example"
       ?"These four original fictional examples are never added to your personal notebook."
       :"Only saved timelines in this browser are used. Draft edits are excluded until saved.";
-    $("pattern-compare").hidden=!(a&&b);
-    $("pattern-empty").hidden=Boolean(a&&b);
-    if(!a||!b){
+    const hasIndependentComparison=Boolean(a&&b&&sequences.length>=2);
+    $("pattern-compare").hidden=!hasIndependentComparison;
+    $("pattern-empty").hidden=hasIndependentComparison;
+    if(!hasIndependentComparison){
       $("pattern-empty").textContent="Save at least two timeline sequences in the Rhythm Engine, then return here. A single saved sequence can still be exported, but cross-example comparisons need two.";
       renderMotifs(sequences);
       $("pattern-neighbors").replaceChildren();
