@@ -12,8 +12,8 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <a class="wordmark" href="#top" aria-label="ComedyAtlas home"><span class="brand-symbol" aria-hidden="true">◉</span> COMEDY<span>ATLAS</span><span class="version"> / v0.3</span></a>
-    <nav aria-label="Main navigation"><a href="#brain">The Brain</a><a href="#signatures">Signatures</a><a href="#catalog">Atlas</a><a href="#studio">Studio</a><a href="#rhythm">Rhythm</a><a href="https://github.com/MichaelWave369/ComedyAtlas">GitHub ↗</a></nav>
+    <a class="wordmark" href="#top" aria-label="ComedyAtlas home"><span class="brand-symbol" aria-hidden="true">◉</span> COMEDY<span>ATLAS</span><span class="version"> / v0.4</span></a>
+    <nav aria-label="Main navigation"><a href="#brain">The Brain</a><a href="#signatures">Signatures</a><a href="#catalog">Atlas</a><a href="#studio">Studio</a><a href="#rhythm">Rhythm</a><a href="#audio-lab">Audio Lab</a><a href="https://github.com/MichaelWave369/ComedyAtlas">GitHub ↗</a></nav>
   </header>
 
   <main id="main">
@@ -58,7 +58,8 @@
     <section id="signatures" class="section" aria-labelledby="signatures-title">
       <div class="section-head"><div><p class="eyebrow">02 / STYLE VECTORS</p><h2 id="signatures-title">Comedy signatures</h2></div><p>Explore patterns, not rankings.</p></div>
       <div class="signature-card">
-        <div class="selectors">\n          <label for="signature-mode">Model lens<select id="signature-mode"><option value="editorial">Editorial examples</option><option value="observed">My observations</option></select></label>
+        <div class="selectors">
+          <label for="signature-mode">Model lens<select id="signature-mode"><option value="editorial">Editorial examples</option><option value="observed">My observations</option></select></label>
           <label for="profile-a">Primary voice<select id="profile-a"></select></label>
           <label for="profile-b">Compare with<select id="profile-b"></select></label>
           <div class="similarity"><span class="micro-label">VECTOR OVERLAP</span><strong id="similarity-score">—</strong><small>Illustrative cosine similarity</small></div>
@@ -175,6 +176,62 @@
           <p class="result-count" id="rhythm-count"></p>
           <div id="rhythm-saved" class="rhythm-saved-list"></div>
           <p class="fine-print">A fresh original example is loaded on startup but not saved until you choose Save. Imported records never silently replace an existing ID.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="audio-lab" aria-labelledby="audio-heading">
+      <div class="section-head">
+        <div><p class="eyebrow">07 / LOCAL AUDIO LAB</p><h2 id="audio-heading">Hear the space.</h2></div>
+        <p>Acoustic energy, quiet holds, and your manually mapped comedic arc.</p>
+      </div>
+      <div class="studio-intro">
+        <strong>Your file stays on your machine.</strong> Select audio you have permission to analyze. Decoding, playback, waveform drawing, and feature extraction happen inside your browser. No upload, cloud AI, speech-to-text, or permanent audio storage. This measures sound level, not jokes or laughter.
+      </div>
+      <div class="audio-layout">
+        <div class="audio-main">
+          <div class="audio-settings">
+            <label for="lab-file">Choose local audio (maximum 40 MB, 10 minutes)
+              <input type="file" id="lab-file" accept="audio/*,.wav,.mp3,.ogg,.opus,.flac,.m4a,.aac,.webm,.mp4">
+            </label>
+            <label for="lab-threshold">Quiet-window cutoff <output id="lab-threshold-label" for="lab-threshold">-38 dBFS</output>
+              <input type="range" id="lab-threshold" min="-65" max="-15" step="1" value="-38">
+            </label>
+            <label for="lab-min-hold">Minimum quiet hold (milliseconds)
+              <input type="number" id="lab-min-hold" min="100" max="3000" step="50" value="250">
+            </label>
+            <label for="lab-rhythm">Optional saved Rhythm Engine timeline
+              <select id="lab-rhythm"><option value="">No timeline overlay</option></select>
+            </label>
+          </div>
+          <p id="lab-refresh-summary" class="fine-print">No rhythm timelines loaded.</p>
+          <div class="audio-buttons">
+            <button type="button" id="lab-refresh" class="secondary-button">Refresh timelines</button>
+            <button type="button" id="lab-download" class="primary-button" disabled>Export numeric report ↓</button>
+            <button type="button" id="lab-reset" class="danger-button" disabled>Clear audio</button>
+          </div>
+          <p id="lab-status" role="status" aria-live="polite">Select a recording to begin.</p>
+          <p class="audio-file"><strong>Selected:</strong> <span id="lab-file-label">No local audio selected</span></p>
+          <audio id="lab-player" controls preload="none" hidden aria-label="Local audio preview"></audio>
+          <div class="waveform-shell">
+            <canvas id="lab-waveform" width="960" height="270" role="img" aria-label="Waveform amplitude by time. Purple regions show detected low-energy windows; an optional colored strip shows the manually annotated rhythm timeline."></canvas>
+          </div>
+          <div class="rhythm-metrics" aria-label="Computed acoustic signal features">
+            <div><span>Decoded duration</span><strong id="lab-duration">—</strong></div>
+            <div><span>Detected quiet holds</span><strong id="lab-quiet">—</strong></div>
+            <div><span>Peak absolute amplitude</span><strong id="lab-peak">—</strong></div>
+          </div>
+          <div class="audio-comparison">
+            <h3>Acoustic vs. annotated timing</h3>
+            <p id="lab-comparison">Load local audio to compare against a Rhythm Engine timeline.</p>
+          </div>
+        </div>
+        <aside class="audio-side">
+          <h3>Detected quiet windows</h3>
+          <p class="fine-print">A frame counts as quiet when its root-mean-square (RMS) amplitude falls below the chosen dBFS threshold long enough. Loud applause, backing music, and room noise can hide pauses.</p>
+          <ol id="lab-quiet-list" class="audio-events"><li>No audio loaded.</li></ol>
+          <h3>Interpretation boundaries</h3>
+          <p class="fine-print">A Norm-style deliberate hold may be audible rather than silent. A quiet moment in music may not be comedic at all. An overlay starts at 0:00 for both sources and is not automatically synchronized or stretched. Manually align your recordings and timelines.</p>
         </aside>
       </div>
     </section>

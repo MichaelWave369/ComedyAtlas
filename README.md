@@ -6,7 +6,7 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 
 > The "Comedy Brain" is an interpretive map, **not a neuroscientific brain scan, clinical assessment, or objective measurement of talent**. The starter scores are editorial examples, not evidence-backed ratings. Humor is personal and contextual.
 
-## What works in v0.3
+## What works in v0.4
 
 - Interactive nine-node Comedy Brain: select a mechanism to see its meaning, cues, and the performers it connects to.
 - Compare two example performance profiles on all nine signals, with a transparent weighted-vector similarity estimate.
@@ -18,6 +18,9 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 - **Rhythm Engine:** annotate ordered Setup → Silence → Tension → Escalation → Punchline → Release segments with durations (0.01s precision), energy 0–5, and original notes.
 - See a proportional timeline plus an energy strip, seconds of silence, and punchline onset positions.
 - Save up to 60 timelines locally; export/import versioned portable rhythm-only JSON backups. Link a timeline to a seeded Atlas moment or your own saved Observation Studio entry.
+- **Local Audio Lab (v0.4):** decode a browser-supported audio file locally, display a waveform, and detect low-energy windows with adjustable RMS dBFS cutoff and minimum duration.
+- Optional overlay of an existing saved Rhythm Engine timeline; report absolute start-time alignment, annotated-vs-acoustic hold overlap, and duration differences.
+- Preview the chosen audio from an in-browser object URL and export derived numeric features to JSON. Source audio is never uploaded, stored in localStorage, or committed to the repository.
 - Small, plain-JSON data model ready for contributions and later PhiOS/PhiStream integrations.
 
 ## Run locally
@@ -64,7 +67,23 @@ Open **Rhythm** in the navigation. The default timeline is an **original fiction
 4. Press **Save timeline** to persist the draft in this browser. Edits to a saved timeline remain drafts until you save again. **Export JSON** regularly to avoid loss from clearing browser data.
 5. Import JSON backup of `ComedyAtlasRhythmNotebook`, schema 1. The importer rejects malformed files or oversized records before merging. Existing saved IDs win on duplicates. No remote uploads or media playback.
 
-Each timeline records `segments[].phase`, `duration`, `energy`, and `note`. A saved `referenceId` and `referenceLabel` can link to a local observation (or seeded Atlas entry) without modifying that source entry. No audio analysis, speech recognition, embeddings, or actual trained "brain" are claimed.
+Each timeline records `segments[].phase`, `duration`, `energy`, and `note`. A saved `referenceId` and `referenceLabel` can link to a local observation (or seeded Atlas entry) without modifying that source entry. The standalone Rhythm Engine is manual; the separate Audio Lab now computes RMS features from selected recordings. Neither recognizes speech/laughter nor trains a "brain".
+
+## Local Audio Lab (v0.4)
+
+Open **Audio Lab**. Use only recordings you have the rights or permission to analyze. The lab uses your browser's `AudioContext.decodeAudioData` to decode a locally selected recording; supported formats depend on your browser.
+
+- **Limits:** audio file no bigger than **40 MB**, decoded recording no longer than **10 minutes**. It measures the first one or two channels without copying a full stereo downmix. It does not transmit data anywhere or persist the audio in a notebook.
+- **Energy analysis:** non-overlapping **25 ms** frames, measuring each frame's root-mean-square amplitude. An adjustable threshold (**-65 to -15 dBFS**, default -38 dBFS) identifies low-energy frames. Adjacent quiet frames become windows if they last at least **100–3000 ms** (default 250 ms). Values are approximate and sample-dependent; this is **not** speech recognition, emotion detection, laughing detection, loudness normalization, or a trained comedy model.
+- **Waveform:** compressed visual amplitude display, highlights for detected quiet windows and a colored phase strip from an optional saved Rhythm Engine timeline. The strip assumes both begin at time zero, without rescaling, automatic alignment, or time-stretching.
+- **Comparison:** reports how much *manually annotated silence* overlaps detected quiet amplitude intervals. These can be different because an intentional pause may contain sound, while a quiet recording may not be a joke.
+- **Export:** a numeric, versioned JSON report with settings and quiet intervals. This report contains the **selected filename** (a potentially sensitive label) but **no raw audio** or transcription; inspect before sharing.
+- **Privacy:** decoding and playback are browser-local. Audio stays in tab memory and a temporary object URL until clearing the selection or leaving the page. No audio is uploaded or included in `localStorage`, and nothing is sent to a model. Save only derived feature reports intentionally.
+- **Playback:** a built-in native audio player lets you listen to the file you selected. This tool is for local inspection, not redistributing copyrighted recordings.
+
+### Privacy and accuracy limits
+
+Detection thresholds are sensitive to background noise, mixing, recording gain, and music beneath dialogue. A "quiet" window is an acoustic measure, not a comedic judgment. Do not infer intent, mental state, comedic success, or performer quality from these features.
 
 ## Data shape
 
@@ -92,9 +111,12 @@ The model intentionally separates **observation** (a bit uses repetition) from *
 
 - [x] User-created local observations with schema validation and export/import
 - [x] Optional observation-level source links and timestamps (not independent verification)
-- [x] Manual beat/timing annotations and visual timeline (no audio import yet)\n- [ ] Optional waveform markers on **authorized** audio and privacy-preserving local audio analysis
+- [x] Manual beat/timing annotations and visual timeline (no audio import yet)
+- [x] Browser-local waveform and acoustic low-energy window analysis for authorized recordings
 - [x] Observed style averages with transparent sample counts (editorial seeds remain separate)
-- [x] Linked rhythm timelines to Atlas references (local identifiers)\n- [ ] Accessible graph connecting moments, signatures, and timings
+- [x] Linked rhythm timelines to Atlas references (local identifiers)
+- [ ] Automatically aligned time annotations and editable waveform markers
+- [ ] Accessible graph connecting moments, signatures, and timings
 - [ ] Local-first PhiOS / PhiStream adapters (versioned JSON contract)
 - [ ] Voluntary contributor review rather than definitive performer rankings
 

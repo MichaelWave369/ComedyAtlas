@@ -2,6 +2,7 @@ import { MECHANISM_IDS, clampWeight, escapeHtml, filterMoments, similarity, vali
 import { deriveObservedProfile, observationToMoment } from "./workspace.mjs";
 import { mountStudio } from "./studio.mjs";
 import { mountRhythm } from "./rhythm-studio.mjs";
+import { mountAudioLab } from "./audio-lab.mjs";
 
 const $ = (id) => document.getElementById(id);
 const state = { atlas:null, active:"timing", first:"norm", second:"tim", query:"", mechanism:"all", observations:[], signatureMode:"editorial" };
@@ -127,6 +128,7 @@ function setup() {
     if (state.signatureMode === "observed") renderSignatures();
     rhythm.updateReferences();
   });
+  mountAudioLab();
 }
 async function init() {
   try {

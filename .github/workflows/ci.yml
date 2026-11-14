@@ -11,5 +11,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: node --check src/app.mjs && node --check src/rhythm-studio.mjs && node --check src/rhythm-core.mjs && node --check src/studio.mjs
+      - run: node --check src/app.mjs && node --check src/rhythm-studio.mjs && node --check src/rhythm-core.mjs && node --check src/studio.mjs && node --check src/audio-lab.mjs && node --check src/audio-core.mjs
       - run: npm test

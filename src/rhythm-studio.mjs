@@ -145,6 +145,7 @@ export function mountRhythm(atlas,getMoments) {
     try{localStorage.setItem(RHYTHM_KEY,serializeRhythms(saved));announce(msg);}
     catch{announce("Changes are in memory only; browser storage failed. Export a backup now.",true);}
     renderSaved();
+    document.dispatchEvent(new Event("comedyatlas:rhythms-updated"));
   }
   function segmentFromForm(id){
     return normalizeSegment({

@@ -46,3 +46,31 @@
 .rhythm-tools button:disabled{opacity:.35;cursor:not-allowed}
 @media(max-width:1050px){.rhythm-layout{grid-template-columns:1fr}}
 @media(max-width:650px){.rhythm-editor,.rhythm-notebook{padding:1.1rem}.rhythm-segment-fields{grid-template-columns:1fr 1fr}.rhythm-segment-fields .wide{grid-column:1/-1}.rhythm-block{min-width:60px}.energy-col{min-width:60px}.rhythm-metrics strong{font-size:.94rem}}
+
+/* Local audio lab / v0.4 */
+.audio-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,.65fr);gap:1rem;align-items:start}
+.audio-main,.audio-side{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.6rem;min-width:0}
+.audio-settings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.15rem;margin-bottom:.75rem}
+.audio-settings label{justify-content:end;min-width:0}
+.audio-settings output{color:var(--accent);font-weight:800;margin-left:.3rem}
+.audio-settings input[type=range]{padding:.3rem;accent-color:var(--accent)}
+.audio-settings input[type=file]{padding:.6rem;font-size:.76rem;min-height:50px}
+.audio-settings input[type=file]::file-selector-button{background:var(--accent);border:0;color:#151726;font-weight:800;padding:.5rem .7rem;margin-right:.6rem;border-radius:4px;cursor:pointer}
+.audio-buttons{display:flex;flex-wrap:wrap;gap:.6rem;margin:.85rem 0 1rem}
+.audio-buttons button:disabled{opacity:.45;cursor:not-allowed}
+#lab-status{padding:1rem;background:#20263c;color:var(--mint);border:1px solid var(--line);border-radius:8px;font-size:.82rem;line-height:1.6}
+#lab-status[data-error=true]{border-color:#915465;color:#ffbdc5}
+.audio-file{font-size:.82rem;color:var(--muted);overflow-wrap:anywhere}
+.audio-file strong{color:var(--ink)}
+#lab-player{width:100%;margin:.6rem 0 1rem}
+#lab-player[hidden]{display:none}
+.waveform-shell{width:100%;overflow:hidden;border:1px solid var(--line);border-radius:9px;background:#151a2c}
+#lab-waveform{width:100%;height:270px;display:block}
+.audio-comparison{margin-top:1.5rem;border-top:1px solid var(--line);padding-top:1.4rem}
+.audio-comparison h3,.audio-side h3{font-size:1.1rem;margin:0 0 .8rem}
+.audio-comparison p,.audio-side p{font-size:.86rem;line-height:1.75;color:var(--muted)}
+.audio-events{list-style:decimal;padding-left:1.3rem;margin:1rem 0 2rem;max-height:390px;overflow-y:auto;color:var(--ink);font-size:.79rem;line-height:1.8;font-variant-numeric:tabular-nums}
+.audio-events li{padding-left:.3rem;border-bottom:1px solid var(--line)}
+.audio-main .rhythm-metrics{grid-template-columns:repeat(3,minmax(0,1fr));margin:1.2rem 0}
+@media(max-width:1100px){.audio-layout{grid-template-columns:1fr}}
+@media(max-width:650px){.audio-main,.audio-side{padding:1.1rem}.audio-settings{grid-template-columns:1fr}.audio-main .rhythm-metrics{grid-template-columns:1fr 1fr}}
