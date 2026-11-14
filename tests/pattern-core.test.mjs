@@ -80,8 +80,10 @@ test("motif support counts distinct sequences rather than repeated occurrence in
   const results=mineMotifs([a,b,c,d,same],{length:2,minSupport:2});
   const motif=results.find(x=>x.key==="setup|tension");
   assert.ok(motif);
-  assert.equal(motif.support,3);
-  assert.equal(new Set(motif.sourceIds).size,3);
+  assert.equal(motif.support,4); // d also contains setup → tension: count distinct timelines, not occurrences
+  assert.equal(new Set(motif.sourceIds).size,4);
+  const repeatedTwice=mineMotifs([a,same],{length:2,minSupport:2}).find(x=>x.key==="setup|tension");
+  assert.equal(repeatedTwice.support,2); // multiple uses in the same timeline count only once
   const tri=mineMotifs([a,b],{length:3,minSupport:2});
   assert.ok(tri.some(x=>x.key==="setup|tension|silence"));
   assert.equal(mineMotifs([a],{length:2,minSupport:2}).length,0);
