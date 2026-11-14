@@ -51,7 +51,7 @@ export function mountRhythm(atlas,getMoments) {
   const findReferences=()=>getMoments();
   function renderReferences(){
     const select=$("rhythm-reference");
-    const old=select.value||draft.referenceId;
+    const old=draft.referenceId;
     select.replaceChildren();
     const none=document.createElement("option");none.value="";none.textContent="Original / unlinked";select.appendChild(none);
     for(const entry of findReferences()){
@@ -107,7 +107,7 @@ export function mountRhythm(atlas,getMoments) {
       button.addEventListener("click",()=>{selectedIndex=i;renderSegmentFields();renderTimeline();});
       track.appendChild(button);
     }
-    const graph=$("rhythm-energy");
+    const graph=$("rhythm-energy-graph");
     graph.replaceChildren();
     graph.style.minWidth=track.style.minWidth;
     for(const s of rows){

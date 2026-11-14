@@ -34,7 +34,7 @@ export function normalizeSegment(raw) {
   if(!raw||typeof raw!=="object"||Array.isArray(raw))throw Error("Timeline segment must be an object.");
   const id=validId(raw.id,"segment","segment ID");
   if(typeof raw.phase!=="string"||!PHASE_IDS.has(raw.phase))throw Error("Unknown rhythm phase.");
-  if(typeof raw.duration!=="number"||!Number.isFinite(raw.duration)||raw.duration<0.1||raw.duration>120||Math.round(raw.duration*100)!==raw.duration*100)
+  if(typeof raw.duration!=="number"||!Number.isFinite(raw.duration)||raw.duration<0.1||raw.duration>120||Math.abs(raw.duration*100-Math.round(raw.duration*100))>1e-8)
     throw Error("Segment duration must be between 0.1 and 120 seconds, in hundredths.");
   if(!Number.isInteger(raw.energy)||raw.energy<0||raw.energy>5)throw Error("Energy must be a whole number between 0 and 5.");
   return {id,phase:raw.phase,duration:raw.duration,energy:raw.energy,note:limitedText(raw.note??"","Note",240,true)};
