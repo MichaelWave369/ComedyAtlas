@@ -84,3 +84,14 @@ test("all-loud and all-quiet signals are handled without invented punchlines",()
   assert.equal(analyzePcm(quiet,sr).quietPercent,100);
   assert.equal(compareToRhythm(analysis,{...originalDemo(),segments:[{phase:"setup",duration:1,energy:2}]}).annotatedSilenceOverlapPercent,null);
 });
+
+test("stereo RMS uses both channels and does not mislabel a silent left channel",()=>{
+  const left = new Float32Array(sr);
+  const right = new Float32Array(sr).fill(0.5);
+  const result=analyzePcm([left,right],sr,{frameMs:25,thresholdDb:-30,minQuietMs:200});
+  assert.equal(result.channels,2);
+  assert.equal(result.quietSeconds,0);
+  assert.ok(result.rms>0.35&&result.rms<0.36);
+  assert.throws(()=>analyzePcm([left,new Float32Array(sr-1)],sr));
+  assert.throws(()=>analyzePcm([left,right,left],sr));
+});
