@@ -1,6 +1,7 @@
 import { MECHANISM_IDS, clampWeight, escapeHtml, filterMoments, similarity, validateAtlas } from "./core.mjs";
 import { deriveObservedProfile, observationToMoment } from "./workspace.mjs";
 import { mountStudio } from "./studio.mjs";
+import { mountRhythm } from "./rhythm-studio.mjs";
 
 const $ = (id) => document.getElementById(id);
 const state = { atlas:null, active:"timing", first:"norm", second:"tim", query:"", mechanism:"all", observations:[], signatureMode:"editorial" };
@@ -116,10 +117,15 @@ function setup() {
   filter.addEventListener("change",(e) => { state.mechanism = e.target.value; renderCatalog(); });
   renderBrain();
   renderSignatures();
+  const rhythm = mountRhythm(state.atlas, () => [
+    ...state.atlas.moments,
+    ...state.observations.map(observationToMoment)
+  ]);
   mountStudio(state.atlas, (entries) => {
     state.observations = entries;
     renderCatalog();
     if (state.signatureMode === "observed") renderSignatures();
+    rhythm.updateReferences();
   });
 }
 async function init() {

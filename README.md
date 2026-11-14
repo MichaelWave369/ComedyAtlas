@@ -6,7 +6,7 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 
 > The "Comedy Brain" is an interpretive map, **not a neuroscientific brain scan, clinical assessment, or objective measurement of talent**. The starter scores are editorial examples, not evidence-backed ratings. Humor is personal and contextual.
 
-## What works in v0.2
+## What works in v0.3
 
 - Interactive nine-node Comedy Brain: select a mechanism to see its meaning, cues, and the performers it connects to.
 - Compare two example performance profiles on all nine signals, with a transparent weighted-vector similarity estimate.
@@ -15,6 +15,9 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 - **Observation Studio** to add personal, source-attributed moments and score all nine signals from 0 to 5.
 - Switch signature comparisons between **editorial examples** and **averages derived from your own annotated moments** (sample count disclosed).
 - Local-only browser persistence with explicit JSON export and import. No backend, cloud sync, or content uploads.
+- **Rhythm Engine:** annotate ordered Setup → Silence → Tension → Escalation → Punchline → Release segments with durations (0.01s precision), energy 0–5, and original notes.
+- See a proportional timeline plus an energy strip, seconds of silence, and punchline onset positions.
+- Save up to 60 timelines locally; export/import versioned portable rhythm-only JSON backups. Link a timeline to a seeded Atlas moment or your own saved Observation Studio entry.
 - Small, plain-JSON data model ready for contributions and later PhiOS/PhiStream integrations.
 
 ## Run locally
@@ -51,6 +54,18 @@ Open the **Studio** section. Enter a title, source, performer/character, origina
 
 The seed profiles are editorial examples, not verified biographical facts. The observational view is a sample mean, not a scientific measure of humor or audience response. Keep original observations, subjective interpretations, and audience reactions separate; the next model version can track evidence quality and annotator disagreement.
 
+## Rhythm Engine (v0.3)
+
+Open **Rhythm** in the navigation. The default timeline is an **original fictional example**: it is not a reconstruction of a copyrighted sketch.
+
+1. Select a colored phase block to inspect/edit it. Use **Update selected**, **Move earlier/later**, or **Remove**. Use **Add segment** to append a phase.
+2. Adjust its duration (0.1 to 120 seconds with 0.01-second precision), perceived energy (0–5), and optional commentary. Each timeline can hold 1–32 blocks, with a total length of at most 15 minutes.
+3. Add a custom title, optional linked Atlas moment, and a **reference tempo** (40–240 BPM). Quarter-note beat count is `duration × BPM / 60`; it is a mathematical conversion, not automatic tempo or laughter detection.
+4. Press **Save timeline** to persist the draft in this browser. Edits to a saved timeline remain drafts until you save again. **Export JSON** regularly to avoid loss from clearing browser data.
+5. Import JSON backup of `ComedyAtlasRhythmNotebook`, schema 1. The importer rejects malformed files or oversized records before merging. Existing saved IDs win on duplicates. No remote uploads or media playback.
+
+Each timeline records `segments[].phase`, `duration`, `energy`, and `note`. A saved `referenceId` and `referenceLabel` can link to a local observation (or seeded Atlas entry) without modifying that source entry. No audio analysis, speech recognition, embeddings, or actual trained "brain" are claimed.
+
 ## Data shape
 
 Edit `data/atlas.json`:
@@ -77,9 +92,9 @@ The model intentionally separates **observation** (a bit uses repetition) from *
 
 - [x] User-created local observations with schema validation and export/import
 - [x] Optional observation-level source links and timestamps (not independent verification)
-- [ ] Optional beat/timing annotation and waveform markers on **authorized** audio
+- [x] Manual beat/timing annotations and visual timeline (no audio import yet)\n- [ ] Optional waveform markers on **authorized** audio and privacy-preserving local audio analysis
 - [x] Observed style averages with transparent sample counts (editorial seeds remain separate)
-- [ ] Accessible graph and cross-medium connections
+- [x] Linked rhythm timelines to Atlas references (local identifiers)\n- [ ] Accessible graph connecting moments, signatures, and timings
 - [ ] Local-first PhiOS / PhiStream adapters (versioned JSON contract)
 - [ ] Voluntary contributor review rather than definitive performer rankings
 
