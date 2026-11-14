@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d1020">
+  <meta name="description" content="ComedyAtlas: explore the timing, tension, surprise, and rhythm of laughter with nine comedy mechanisms.">
+  <title>ComedyAtlas | The Comedy Brain</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./src/app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="ComedyAtlas home"><span class="brand-symbol" aria-hidden="true">◉</span> COMEDY<span>ATLAS</span><span class="version"> / v0.1</span></a>
+    <nav aria-label="Main navigation"><a href="#brain">The Brain</a><a href="#signatures">Signatures</a><a href="#catalog">Atlas</a><a href="https://github.com/MichaelWave369/ComedyAtlas">GitHub ↗</a></nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow"><span class="dot"></span> OPEN EXPERIMENT · NINE SIGNALS</p>
+        <h1 id="hero-title">The <em>anatomy</em><br> of a laugh.</h1>
+        <p class="lead">Map the setup, the silence, the surprise, and the release. Explore how comedians shape tension like musicians shape sound.</p>
+        <p class="motto">“Laughter is a melody. Silence is the setup.”</p>
+        <a class="primary-link" href="#brain">Explore the brain <span aria-hidden="true">↘</span></a>
+      </div>
+      <aside class="hero-side" aria-label="Model overview">
+        <p class="micro-label">MODEL / 001</p>
+        <div class="large-nine">9<span>↗</span></div>
+        <p>Creative mechanisms.<br>Infinite combinations.</p>
+        <div class="rule"></div>
+        <p class="micro-label">STATUS / EXPERIMENTAL</p>
+        <p class="fine-print">Interpretive creative signatures. Not neuroscience, diagnostic assessment, or rankings of who's funniest.</p>
+      </aside>
+    </section>
+
+    <section id="brain" class="section" aria-labelledby="brain-title">
+      <div class="section-head"><div><p class="eyebrow">01 / THE MODEL</p><h2 id="brain-title">The Comedy Brain</h2></div><p>Nine connected mechanisms. Pick a node.</p></div>
+      <div class="brain-layout">
+        <div class="brain-stage" aria-label="Nine clickable comedy mechanisms">
+          <div class="orbit-ring outer" aria-hidden="true"></div><div class="orbit-ring inner" aria-hidden="true"></div>
+          <div class="brain-center" aria-hidden="true"><span class="center-icon">✳</span><strong>HUMOR</strong><small>the shared field</small></div>
+          <div id="brain-nodes" class="brain-nodes"></div>
+        </div>
+        <div class="detail-panel" aria-live="polite">
+          <p class="micro-label" id="mechanism-number">SIGNAL / 01</p>
+          <h3 id="mechanism-name">Loading mechanisms…</h3>
+          <p id="mechanism-description"></p>
+          <p class="detail-label">WHAT TO LISTEN FOR</p><p id="mechanism-cues"></p>
+          <p class="detail-label">THE MUSICAL LENS</p><p id="mechanism-music"></p>
+          <p class="detail-label">CONNECTED SEED PROFILES</p>
+          <div id="mechanism-people" class="pills"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="signatures" class="section" aria-labelledby="signatures-title">
+      <div class="section-head"><div><p class="eyebrow">02 / STYLE VECTORS</p><h2 id="signatures-title">Comedy signatures</h2></div><p>Explore patterns, not rankings.</p></div>
+      <div class="signature-card">
+        <div class="selectors">
+          <label for="profile-a">Primary voice<select id="profile-a"></select></label>
+          <label for="profile-b">Compare with<select id="profile-b"></select></label>
+          <div class="similarity"><span class="micro-label">VECTOR OVERLAP</span><strong id="similarity-score">—</strong><small>Illustrative cosine similarity</small></div>
+        </div>
+        <div class="legend"><span><i class="swatch a"></i> Primary</span><span><i class="swatch b"></i> Comparison</span><span>0 = less prominent · 5 = more prominent</span></div>
+        <div id="signature-bars" class="signature-bars"></div>
+        <div id="signature-notes" class="signature-notes"></div>
+      </div>
+    </section>
+
+    <section class="interlude" aria-label="Anatomy of a laugh">
+      <p class="eyebrow">03 / THE ARC</p><h2>Setup <span>→</span> tension <span>→</span> breach <span>→</span> release.</h2>
+      <p>Not every joke follows this path. It's a useful lens for the timing of surprise, from a Norm pause to a dance-floor drop.</p>
+    </section>
+
+    <section id="catalog" class="section" aria-labelledby="catalog-title">
+      <div class="section-head"><div><p class="eyebrow">04 / THE COLLECTION</p><h2 id="catalog-title">The Atlas</h2></div><p>Illustrative moments and source references. No clips hosted.</p></div>
+      <div class="catalog-tools"><label for="search">Find a moment<input id="search" type="search" placeholder="Search titles, performers, styles…" autocomplete="off"></label><label for="filter">Mechanism<select id="filter"><option value="all">All mechanisms</option></select></label></div>
+      <p id="result-count" class="result-count" role="status"></p>
+      <div id="moment-grid" class="moment-grid"></div>
+    </section>
+  </main>
+  <footer><div><strong>COMEDY<span>ATLAS</span></strong><p>A living map of the ridiculous.</p></div><p>Open source · No tracking · Editorial examples only · <a href="https://github.com/MichaelWave369/ComedyAtlas">Contribute on GitHub ↗</a></p></footer>
+</body>
+</html>

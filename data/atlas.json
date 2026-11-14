@@ -1,0 +1,357 @@
+{
+  "schemaVersion": "1.0.0",
+  "notice": "All scores are editorial seed examples, not objective rankings or scientific measures. No audio/video is included.",
+  "mechanisms": [
+    {
+      "id": "timing",
+      "name": "Timing & Silence",
+      "short": "Timing",
+      "description": "Pacing, pauses, and delayed release: the spaces that make an audience anticipate what comes next.",
+      "cues": "Unexpected pauses, elongated setups, anti-punchlines, withheld response.",
+      "music": "Rest notes, negative space, pickup beats, and the drop after a long break."
+    },
+    {
+      "id": "escalation",
+      "name": "Escalation",
+      "short": "Escalation",
+      "description": "A small problem compounds until the original situation becomes gloriously unmanageable.",
+      "cues": "Rising stakes, repeated doubling down, increasingly disproportionate reactions.",
+      "music": "Builds, risers, intensifying patterns, and dynamic ramps."
+    },
+    {
+      "id": "absurdity",
+      "name": "Absurdity",
+      "short": "Absurdity",
+      "description": "The logic of a scene departs from ordinary reality but stays consistent enough to follow.",
+      "cues": "Surreal premises, non sequiturs, alternate rules, impossible events.",
+      "music": "Unexpected key changes, odd textures, and hard rhythmic left turns."
+    },
+    {
+      "id": "character",
+      "name": "Character",
+      "short": "Character",
+      "description": "Voice, posture, worldview, and persona make a line funny before the punchline lands.",
+      "cues": "Distinct diction, physical mannerisms, recurring personality traits.",
+      "music": "Timbre, vocal identity, recurring motifs, and character-led hooks."
+    },
+    {
+      "id": "friction",
+      "name": "Social Friction",
+      "short": "Friction",
+      "description": "Awkwardness and clashing expectations produce tension between people.",
+      "cues": "Social misreads, embarrassment, stubborn denial, public discomfort.",
+      "music": "Off-beat accents, interrupted phrases, and tension against the groove."
+    },
+    {
+      "id": "deadpan",
+      "name": "Deadpan Conviction",
+      "short": "Deadpan",
+      "description": "An impossible or foolish premise is delivered with absolute sincerity or institutional confidence.",
+      "cues": "Serious framing, fake authority, minimal reaction, formal delivery.",
+      "music": "Steady pulse beneath increasingly improbable material."
+    },
+    {
+      "id": "repetition",
+      "name": "Repetition & Callback",
+      "short": "Callbacks",
+      "description": "A phrase or idea returns, gains context, and changes what the listener expects.",
+      "cues": "Repeated refrains, familiar reversals, callbacks, pattern interruption.",
+      "music": "Loops, sampled hooks, variations, and the payoff of recurring themes."
+    },
+    {
+      "id": "shock",
+      "name": "Taboo & Shock",
+      "short": "Shock",
+      "description": "A norm is abruptly challenged, with comic distance or reframing shaping the response.",
+      "cues": "Boundary-pushing premises, sudden contrast, dark exaggeration.",
+      "music": "Abrupt cuts and dissonant accents; context and audience comfort matter."
+    },
+    {
+      "id": "musicality",
+      "name": "Rhythm & Musicality",
+      "short": "Musicality",
+      "description": "Speech and laughter already contain cadence, breath, pitch, syncopation, and groove.",
+      "cues": "Distinctive vocal rhythm, repeatable syllables, phrasing, sonic texture.",
+      "music": "Chop dialogue as a rhythmic instrument; treat silence as part of the composition."
+    }
+  ],
+  "profiles": [
+    {
+      "id": "norm",
+      "name": "Norm Macdonald",
+      "kind": "Comedian",
+      "context": "Stand-up, talk shows, long-form joke telling",
+      "note": "Illustrative signature emphasizing extended setup, deadpan framing, and anti-payoff.",
+      "weights": {
+        "timing": 5,
+        "escalation": 2,
+        "absurdity": 3,
+        "character": 3,
+        "friction": 3,
+        "deadpan": 5,
+        "repetition": 4,
+        "shock": 2,
+        "musicality": 4
+      }
+    },
+    {
+      "id": "tim",
+      "name": "Tim Robinson",
+      "kind": "Sketch performer",
+      "context": "I Think You Should Leave",
+      "note": "Illustrative signature emphasizing escalating arguments, social friction, and stubborn repetition.",
+      "weights": {
+        "timing": 4,
+        "escalation": 5,
+        "absurdity": 5,
+        "character": 5,
+        "friction": 5,
+        "deadpan": 4,
+        "repetition": 5,
+        "shock": 3,
+        "musicality": 5
+      }
+    },
+    {
+      "id": "trevor",
+      "name": "Trevor Moore",
+      "kind": "Sketch performer",
+      "context": "The Whitest Kids U' Know; musical comedy",
+      "note": "Illustrative signature combining outrageous premises with straight-faced presentation and songwriting.",
+      "weights": {
+        "timing": 4,
+        "escalation": 4,
+        "absurdity": 5,
+        "character": 4,
+        "friction": 3,
+        "deadpan": 5,
+        "repetition": 3,
+        "shock": 5,
+        "musicality": 5
+      }
+    },
+    {
+      "id": "william",
+      "name": "William Montgomery",
+      "kind": "Stand-up performer",
+      "context": "Kill Tony",
+      "note": "Illustrative signature highlighting abrupt energy shifts, recurring phrases, and forceful vocal cadence.",
+      "weights": {
+        "timing": 4,
+        "escalation": 5,
+        "absurdity": 4,
+        "character": 5,
+        "friction": 4,
+        "deadpan": 3,
+        "repetition": 5,
+        "shock": 4,
+        "musicality": 5
+      }
+    },
+    {
+      "id": "dave",
+      "name": "Dave Foley",
+      "kind": "Sketch performer",
+      "context": "The Kids in the Hall",
+      "note": "Illustrative signature emphasizing sustained character portrayal and increasingly absurd situations.",
+      "weights": {
+        "timing": 4,
+        "escalation": 4,
+        "absurdity": 4,
+        "character": 5,
+        "friction": 4,
+        "deadpan": 4,
+        "repetition": 3,
+        "shock": 3,
+        "musicality": 4
+      }
+    },
+    {
+      "id": "harland",
+      "name": "Harland Williams",
+      "kind": "Comedian",
+      "context": "Stand-up, film, interviews",
+      "note": "Illustrative signature for conversational detours, strange images, and playful deadpan.",
+      "weights": {
+        "timing": 4,
+        "escalation": 4,
+        "absurdity": 5,
+        "character": 5,
+        "friction": 3,
+        "deadpan": 4,
+        "repetition": 3,
+        "shock": 3,
+        "musicality": 4
+      }
+    },
+    {
+      "id": "swan",
+      "name": "Miss Swan",
+      "kind": "Fictional sketch character",
+      "context": "MADtv; portrayed by Alex Borstein",
+      "note": "A character-level rather than performer-level illustration of vocal identity and repeated misunderstandings.",
+      "weights": {
+        "timing": 4,
+        "escalation": 4,
+        "absurdity": 4,
+        "character": 5,
+        "friction": 5,
+        "deadpan": 4,
+        "repetition": 5,
+        "shock": 2,
+        "musicality": 5
+      }
+    },
+    {
+      "id": "adam",
+      "name": "Adam DeMamp",
+      "kind": "Fictional sitcom character",
+      "context": "Workaholics; portrayed by Adam DeVine",
+      "note": "Character-level example: outsized enthusiasm, persuasive bravado, and rhythmically emphatic delivery.",
+      "weights": {
+        "timing": 4,
+        "escalation": 5,
+        "absurdity": 4,
+        "character": 5,
+        "friction": 4,
+        "deadpan": 2,
+        "repetition": 4,
+        "shock": 3,
+        "musicality": 5
+      }
+    }
+  ],
+  "moments": [
+    {
+      "id": "moth",
+      "title": "The long-form anti-joke",
+      "source": "Norm Macdonald · storytelling style",
+      "profileId": "norm",
+      "medium": "Performance technique",
+      "description": "The setup grows long enough that waiting becomes part of the laugh.",
+      "mechanisms": [
+        "timing",
+        "deadpan",
+        "repetition"
+      ]
+    },
+    {
+      "id": "coffin",
+      "title": "Coffin Flop",
+      "source": "I Think You Should Leave",
+      "profileId": "tim",
+      "medium": "Sketch reference",
+      "description": "A wildly implausible pitch defended with escalating seriousness.",
+      "mechanisms": [
+        "escalation",
+        "absurdity",
+        "friction",
+        "deadpan"
+      ]
+    },
+    {
+      "id": "about",
+      "title": "About That",
+      "source": "MicTek · Comical Stuffs Vol. 2",
+      "profileId": "tim",
+      "medium": "User-created music reference",
+      "description": "A techno reinterpretation of an emphatic comic question; a case study in cadence and repetition.",
+      "mechanisms": [
+        "musicality",
+        "repetition",
+        "escalation"
+      ]
+    },
+    {
+      "id": "turbo",
+      "title": "Turbo Tyme",
+      "source": "MicTek · Comical Stuffs Vol. 2",
+      "profileId": "tim",
+      "medium": "User-created music reference",
+      "description": "Sample-based synthwave that turns the surreal urgency of a sketch into rhythmic energy.",
+      "mechanisms": [
+        "absurdity",
+        "escalation",
+        "musicality"
+      ]
+    },
+    {
+      "id": "auto",
+      "title": "Auto Erotic",
+      "source": "The Whitest Kids U' Know",
+      "profileId": "trevor",
+      "medium": "Dark sketch reference",
+      "description": "An example of dark absurdism and unsettling premise inversion; listed without distributing footage.",
+      "mechanisms": [
+        "shock",
+        "absurdity",
+        "deadpan"
+      ]
+    },
+    {
+      "id": "william-song",
+      "title": "Never Gonna Stop",
+      "source": "MicTek · Sounds From the Mothership",
+      "profileId": "william",
+      "medium": "User-created music reference",
+      "description": "An energetic phrase transforms into a soulful recurring musical motif.",
+      "mechanisms": [
+        "repetition",
+        "musicality",
+        "character"
+      ]
+    },
+    {
+      "id": "girl-drink",
+      "title": "Girl Drink Drunk",
+      "source": "The Kids in the Hall",
+      "profileId": "dave",
+      "medium": "Sketch reference",
+      "description": "A character premise grows through repetition, commitment, and escalating consequences.",
+      "mechanisms": [
+        "character",
+        "escalation",
+        "repetition"
+      ]
+    },
+    {
+      "id": "miss",
+      "title": "Look Alikes",
+      "source": "MicTek · Comical Stuffs Vol. 2",
+      "profileId": "swan",
+      "medium": "User-created music reference",
+      "description": "A lo-fi hip-hop treatment of a MADtv character's memorable speaking patterns.",
+      "mechanisms": [
+        "character",
+        "friction",
+        "musicality"
+      ]
+    },
+    {
+      "id": "get-yoked",
+      "title": "Get Yoked",
+      "source": "MicTek · Comical Stuffs Vol. 2",
+      "profileId": "adam",
+      "medium": "User-created music reference",
+      "description": "A dance-oriented example of transforming an expressive sitcom voice into a hook.",
+      "mechanisms": [
+        "character",
+        "musicality",
+        "repetition"
+      ]
+    },
+    {
+      "id": "riff",
+      "title": "Conversational detour",
+      "source": "Harland Williams · improvisational style",
+      "profileId": "harland",
+      "medium": "Performance technique",
+      "description": "A normal observation heads into bizarre specificity while keeping a straight face.",
+      "mechanisms": [
+        "absurdity",
+        "deadpan",
+        "character"
+      ]
+    }
+  ]
+}
