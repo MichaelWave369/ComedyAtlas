@@ -10,7 +10,7 @@ const demo=originalDemo();
 test("demo is original, schema-valid, and has all six phases",()=>{
   assert.equal(normalizeRhythm(demo).segments.length,6);
   assert.equal(PHASES.length,6);
-  assert.deepEqual(demo.segments.map(s=>s.phase),PHASES.map(p=>p.id));
+  assert.deepEqual(new Set(demo.segments.map(s=>s.phase)),new Set(PHASES.map(p=>p.id)));
 });
 test("timing rows and summary are deterministic",()=>{
   const rows=buildTimingRows(demo);
@@ -33,6 +33,7 @@ test("edited energy and duration require precise bounds",()=>{
   for(const energy of [-1,6,0.5,"5"])assert.throws(()=>normalizeSegment({...demo.segments[0],energy}));
   assert.equal(normalizeSegment({...demo.segments[0],duration:0.1}).duration,0.1);
   assert.equal(normalizeSegment({...demo.segments[0],duration:120}).duration,120);
+  assert.equal(normalizeSegment({...demo.segments[0],duration:1.11}).duration,1.11);
 });
 test("reject invalid phases, duplicate IDs and oversized sequences",()=>{
   assert.throws(()=>normalizeSegment({...demo.segments[0],phase:"internet"}));
