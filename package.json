@@ -1,0 +1,13 @@
+{
+  "name": "comedy-atlas",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "An open exploratory atlas of comic mechanisms and rhythm",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
