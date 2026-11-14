@@ -7,13 +7,13 @@ const rhythm=read("src/rhythm-studio.mjs");
 const app=read("src/app.mjs");
 
 test("HTML ids remain unique as the UI expands",()=>{
-  const ids=[...html.matchAll(/\\bid="([^"]+)"/g)].map(x=>x[1]);
+  const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]);
   assert.equal(new Set(ids).size,ids.length,"Duplicate HTML ids found.");
 });
 
 test("every rhythm editor target is represented in HTML",()=>{
-  const references=[...rhythm.matchAll(/\\$\\("([^"]+)"\\)/g)].map(x=>x[1]);
-  const ids=new Set([...html.matchAll(/\\bid="([^"]+)"/g)].map(x=>x[1]));
+  const references=[...rhythm.matchAll(/\$\("([^"]+)"\)/g)].map(x=>x[1]);
+  const ids=new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]));
   for(const id of references)assert.ok(ids.has(id),"Missing rhythm control: "+id);
 });
 
