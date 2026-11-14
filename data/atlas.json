@@ -201,6 +201,24 @@
         "shock": 2,
         "musicality": 5
       }
+    },
+    {
+      "id": "adam",
+      "name": "Adam DeMamp",
+      "kind": "Fictional sitcom character",
+      "context": "Workaholics; portrayed by Adam DeVine",
+      "note": "Character-level example: outsized enthusiasm, persuasive bravado, and rhythmically emphatic delivery.",
+      "weights": {
+        "timing": 4,
+        "escalation": 5,
+        "absurdity": 4,
+        "character": 5,
+        "friction": 4,
+        "deadpan": 2,
+        "repetition": 4,
+        "shock": 3,
+        "musicality": 5
+      }
     }
   ],
   "moments": [
@@ -313,7 +331,7 @@
       "id": "get-yoked",
       "title": "Get Yoked",
       "source": "MicTek · Comical Stuffs Vol. 2",
-      "profileId": "tim",
+      "profileId": "adam",
       "medium": "User-created music reference",
       "description": "A dance-oriented example of transforming an expressive sitcom voice into a hook.",
       "mechanisms": [
