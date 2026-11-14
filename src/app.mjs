@@ -1,4 +1,6 @@
-import { MECHANISM_IDS, clampWeight, escapeHtml, filterMoments, similarity, validateAtlas } from "./core.mjs";\nimport { deriveObservedProfile, observationToMoment } from "./workspace.mjs";\nimport { mountStudio } from "./studio.mjs";
+import { MECHANISM_IDS, clampWeight, escapeHtml, filterMoments, similarity, validateAtlas } from "./core.mjs";
+import { deriveObservedProfile, observationToMoment } from "./workspace.mjs";
+import { mountStudio } from "./studio.mjs";
 
 const $ = (id) => document.getElementById(id);
 const state = { atlas:null, active:"timing", first:"norm", second:"tim", query:"", mechanism:"all", observations:[], signatureMode:"editorial" };
@@ -56,12 +58,23 @@ function fillSelect(select, options) {
   }));
 }
 
+
 function renderSignatures() {
-  const a = profile(state.first);
-  const b = profile(state.second);
-  if (!a || !b) return;
-  $("profile-a").value = a.id;
-  $("profile-b").value = b.id;
+  const primary = profile(state.first);
+  const comparison = profile(state.second);
+  if (!primary || !comparison) return;
+  const observed = state.signatureMode === "observed";
+  const a = observed ? deriveObservedProfile(primary,state.observations) : primary;
+  const b = observed ? deriveObservedProfile(comparison,state.observations) : comparison;
+  $("profile-a").value = primary.id;
+  $("profile-b").value = comparison.id;
+  $("signature-mode").value = state.signatureMode;
+  if (!a || !b) {
+    $("similarity-score").textContent = "—";
+    $("signature-bars").innerHTML = '<p class="empty">Add at least one observation for each selected profile in the Studio to compare their personal signatures.</p>';
+    $("signature-notes").textContent = "Your observational data is never silently mixed with editorial examples.";
+    return;
+  }
   $("similarity-score").textContent = similarity(a,b) + "%";
   $("signature-bars").innerHTML = state.atlas.mechanisms.map((item) => {
     const x = clampWeight(a.weights[item.id]);
@@ -70,19 +83,19 @@ function renderSignatures() {
       + '<div class="bar-track" role="meter" aria-label="' + h(a.name + " " + item.name) + '" aria-valuemin="0" aria-valuemax="5" aria-valuenow="' + x + '"><div class="bar-fill a" style="width:' + (x * 20) + '%"></div></div>'
       + '<div class="bar-track" role="meter" aria-label="' + h(b.name + " " + item.name) + '" aria-valuemin="0" aria-valuemax="5" aria-valuenow="' + y + '"><div class="bar-fill b" style="width:' + (y * 20) + '%"></div></div></div><div class="bar-score">' + x + ' / ' + y + '</div></div>';
   }).join("");
-  $("signature-notes").innerHTML = [a,b].map((p) => '<div class="note"><strong>' + h(p.name) + '</strong><p>' + h(p.note) + '</p></div>').join("");
+  $("signature-notes").innerHTML = [a,b].map((p) => '<div class="note"><strong>' + h(p.name) + (observed ? " · " + p.sampleCount + " observation(s)" : "") + '</strong><p>' + h(p.note) + '</p></div>').join("");
 }
 
 function renderCatalog() {
-  const items = filterMoments(state.atlas.moments,state.query,state.mechanism);
-  $("result-count").textContent = items.length + " of " + state.atlas.moments.length + " seed entries";
+  const allMoments = [...state.observations.map(observationToMoment), ...state.atlas.moments];
+  const items = filterMoments(allMoments,state.query,state.mechanism);
+  $("result-count").textContent = items.length + " of " + allMoments.length + " entries (" + state.observations.length + " personal)";
   $("moment-grid").innerHTML = items.length ? items.map((item) =>
     '<article class="moment"><span class="type">' + h(item.medium) + '</span><h3>' + h(item.title) + '</h3>'
     + '<span class="source">' + h(item.source) + (item.timestamp ? " · " + h(item.timestamp) : "") + '</span><p>' + h(item.description) + '</p>'
     + (item.personal ? '<span class="personal-label">PERSONAL OBSERVATION</span>' : '')
     + (item.sourceUrl ? '<p><a class="source-link" href="' + h(item.sourceUrl) + '" target="_blank" rel="noopener noreferrer">Open source reference ↗</a></p>' : '')
-    + '<div class="tags">'
-    + item.mechanisms.map((id) => '<span class="tag">' + h(mechanism(id)?.short || id) + '</span>').join("")
+    + '<div class="tags">' + item.mechanisms.map((id) => '<span class="tag">' + h(mechanism(id)?.short || id) + '</span>').join("")
     + '</div></article>').join("") : '<p class="empty">No matches. Try another word or signal.</p>';
 }
 
@@ -103,9 +116,12 @@ function setup() {
   filter.addEventListener("change",(e) => { state.mechanism = e.target.value; renderCatalog(); });
   renderBrain();
   renderSignatures();
-  renderCatalog();
+  mountStudio(state.atlas, (entries) => {
+    state.observations = entries;
+    renderCatalog();
+    if (state.signatureMode === "observed") renderSignatures();
+  });
 }
-
 async function init() {
   try {
     const response = await fetch("./data/atlas.json");
