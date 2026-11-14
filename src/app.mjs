@@ -3,6 +3,7 @@ import { deriveObservedProfile, observationToMoment } from "./workspace.mjs";
 import { mountStudio } from "./studio.mjs";
 import { mountRhythm } from "./rhythm-studio.mjs";
 import { mountAudioLab } from "./audio-lab.mjs";
+import { mountPatternLab } from "./pattern-lab.mjs";
 
 const $ = (id) => document.getElementById(id);
 const state = { atlas:null, active:"timing", first:"norm", second:"tim", query:"", mechanism:"all", observations:[], signatureMode:"editorial" };
@@ -129,6 +130,7 @@ function setup() {
     rhythm.updateReferences();
   });
   mountAudioLab();
+  mountPatternLab();
 }
 async function init() {
   try {

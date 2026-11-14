@@ -12,8 +12,8 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <a class="wordmark" href="#top" aria-label="ComedyAtlas home"><span class="brand-symbol" aria-hidden="true">◉</span> COMEDY<span>ATLAS</span><span class="version"> / v0.4</span></a>
-    <nav aria-label="Main navigation"><a href="#brain">The Brain</a><a href="#signatures">Signatures</a><a href="#catalog">Atlas</a><a href="#studio">Studio</a><a href="#rhythm">Rhythm</a><a href="#audio-lab">Audio Lab</a><a href="https://github.com/MichaelWave369/ComedyAtlas">GitHub ↗</a></nav>
+    <a class="wordmark" href="#top" aria-label="ComedyAtlas home"><span class="brand-symbol" aria-hidden="true">◉</span> COMEDY<span>ATLAS</span><span class="version"> / v0.5</span></a>
+    <nav aria-label="Main navigation"><a href="#brain">The Brain</a><a href="#signatures">Signatures</a><a href="#catalog">Atlas</a><a href="#studio">Studio</a><a href="#rhythm">Rhythm</a><a href="#audio-lab">Audio Lab</a><a href="#patterns">Patterns</a><a href="https://github.com/MichaelWave369/ComedyAtlas">GitHub ↗</a></nav>
   </header>
 
   <main id="main">
@@ -232,6 +232,70 @@
           <ol id="lab-quiet-list" class="audio-events"><li>No audio loaded.</li></ol>
           <h3>Interpretation boundaries</h3>
           <p class="fine-print">A Norm-style deliberate hold may be audible rather than silent. A quiet moment in music may not be comedic at all. An overlay starts at 0:00 for both sources and is not automatically synchronized or stretched. Manually align your recordings and timelines.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="patterns" class="section" aria-labelledby="pattern-heading">
+      <div class="section-head">
+        <div><p class="eyebrow">08 / PATTERN DISCOVERY</p><h2 id="pattern-heading">What repeats?</h2></div>
+        <p>Discover shared timing structures across annotated examples.</p>
+      </div>
+      <div class="studio-intro">
+        <strong>Pattern learning, without fake intelligence.</strong> This engine extracts features from human-annotated comedy timelines, compares structural resemblance, and finds repeated phase motifs. It does not diagnose personalities, recognize laughter, or determine what is funny. Original examples and your personal notebook remain separate.
+      </div>
+      <div class="pattern-layout">
+        <div class="pattern-main">
+          <div class="pattern-controls">
+            <label for="pattern-source">Compare dataset
+              <select id="pattern-source">
+                <option value="example">Original fictional examples</option>
+                <option value="personal">My saved rhythm timelines</option>
+              </select>
+            </label>
+            <label for="pattern-first">Reference timeline<select id="pattern-first"></select></label>
+            <label for="pattern-second">Compare against<select id="pattern-second"></select></label>
+          </div>
+          <div class="pattern-tools">
+            <button id="pattern-refresh" type="button" class="secondary-button">Refresh saved timelines</button>
+            <button id="pattern-download" type="button" class="primary-button">Export feature dataset ↓</button>
+          </div>
+          <p id="pattern-status" role="status" aria-live="polite">Loading the pattern engine…</p>
+          <p id="pattern-count" class="result-count"></p>
+          <p id="pattern-cohort-note" class="fine-print"></p>
+          <p id="pattern-empty" class="empty" hidden></p>
+          <div id="pattern-compare">
+            <div class="pattern-scorebox">
+              <div>
+                <span class="micro-label">STRUCTURAL RESEMBLANCE</span>
+                <strong id="pattern-score">—</strong>
+                <p id="pattern-comparison-warning" class="fine-print"></p>
+              </div>
+              <p class="fine-print" id="pattern-duration-note"></p>
+            </div>
+            <h3>Phase fingerprints</h3>
+            <p class="fine-print">Colored block widths represent each segment's share of the timeline, not matching audio.</p>
+            <div id="pattern-strip-a" class="pattern-strip-wrapper"></div>
+            <div id="pattern-strip-b" class="pattern-strip-wrapper"></div>
+            <h3 class="pattern-breakdown-title">What contributes to the comparison?</h3>
+            <div id="pattern-breakdown" class="pattern-breakdown"></div>
+          </div>
+        </div>
+        <aside class="pattern-sidebar">
+          <h3>Nearest structural neighbors</h3>
+          <p class="fine-print">Other timelines sorted by the same transparent similarity formula. Select one to compare.</p>
+          <ol id="pattern-neighbors" class="pattern-neighbors"></ol>
+          <div class="pattern-sidebar-rule"></div>
+          <h3>Recurring comedy motifs</h3>
+          <p class="fine-print">Only count a motif once per distinct timeline. Two phrases in one sketch do not count as two independent examples.</p>
+          <div class="pattern-motif-options">
+            <label for="pattern-motif-length">Motif size<select id="pattern-motif-length"><option value="2">Two phases</option><option value="3">Three phases</option></select></label>
+            <label for="pattern-min-support">Minimum independent examples<select id="pattern-min-support"><option value="2">At least 2</option><option value="3">At least 3</option><option value="4">At least 4</option></select></label>
+          </div>
+          <div id="pattern-motifs" class="pattern-motifs"></div>
+          <div class="pattern-sidebar-rule"></div>
+          <h3>What does a resemblance % mean?</h3>
+          <p class="fine-print">A weighted comparison of phase proportions (30%), ordered transitions (25%), perceived energy shape (20%), hold placement (15%), and payoff placement (10%). All timing is normalized to each annotation's full duration. High scores mean similar <em>structure</em>, not that a performance is funny, original, or scientifically effective.</p>
         </aside>
       </div>
     </section>

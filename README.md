@@ -6,7 +6,7 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 
 > The "Comedy Brain" is an interpretive map, **not a neuroscientific brain scan, clinical assessment, or objective measurement of talent**. The starter scores are editorial examples, not evidence-backed ratings. Humor is personal and contextual.
 
-## What works in v0.4
+## What works in v0.5
 
 - Interactive nine-node Comedy Brain: select a mechanism to see its meaning, cues, and the performers it connects to.
 - Compare two example performance profiles on all nine signals, with a transparent weighted-vector similarity estimate.
@@ -21,6 +21,10 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 - **Local Audio Lab (v0.4):** decode a browser-supported audio file locally, display a waveform, and detect low-energy windows with adjustable RMS dBFS cutoff and minimum duration.
 - Optional overlay of an existing saved Rhythm Engine timeline; report absolute start-time alignment, annotated-vs-acoustic hold overlap, and duration differences.
 - Preview the chosen audio from an in-browser object URL and export derived numeric features to JSON. Source audio is never uploaded, stored in localStorage, or committed to the repository.
+- **Pattern Discovery (v0.5):** derive normalized timing features from human-annotated Rhythm Engine timelines and compare their structure using transparent, deterministic formulas.
+- Explore nearest structural neighbors and two-/three-phase motifs supported by multiple independent saved examples.
+- Four original synthetic demo timelines work without local data. Personal notebook analysis remains a separate opt-in cohort.
+- Export versioned feature-only JSON without source audio, transcripts, or free-form segment notes.
 - Small, plain-JSON data model ready for contributions and later PhiOS/PhiStream integrations.
 
 ## Run locally
@@ -85,6 +89,21 @@ Open **Audio Lab**. Use only recordings you have the rights or permission to ana
 
 Detection thresholds are sensitive to background noise, mixing, recording gain, and music beneath dialogue. A "quiet" window is an acoustic measure, not a comedic judgment. Do not infer intent, mental state, comedic success, or performer quality from these features.
 
+## Pattern Discovery (v0.5)
+
+Open **Patterns** in the navigation. The page starts with **four original fictional demonstrations** that are never written to your private notebook. Change the source to **My saved rhythm timelines** to analyze your own sequences; only **saved** timelines appear, not unsaved drafts.
+
+- Choose two timelines to compare. A resemblance percentage is **not a funny score** and **not learned from audience reactions**. It measures only five types of structural similarity extracted from **manual annotations**, with fixed weights:
+  - **30% phase proportions:** total normalized time spent in each named phase, compared using one minus total variation distance.
+  - **25% phase transitions:** multiset Jaccard overlap of consecutive phase changes (order matters).
+  - **20% energy contour:** one minus mean absolute difference in 12 normalized time buckets, from editor-provided energy levels 0–5.
+  - **15% hold placement:** one minus mean absolute difference in time-bucket presence of manually annotated "silence" phases.
+  - **10% punchline placement:** symmetric closest-distance similarity of normalized payoff onset locations, penalized for differences in the number of marked payoffs.
+- Durations are divided by each timeline's total duration, so two proportionally identical 10-second and 20-second timelines produce 100% structural resemblance even though their lengths differ. Reference BPM is **not** included because it is chosen by the annotator, not measured from the performer.
+- The **Nearest neighbors** view ranks other sequences by this same deterministic formula. **Recurring motifs** count two- or three-phase sequences, with support defined as the number of **distinct timelines** containing a motif at least once (not the number of times one creator repeated the pattern).
+- **Export feature dataset** downloads `ComedyAtlasPatternFeatures` schema 1. It excludes raw audio, transcripts, and free-form segment notes. It **does** include sequence titles and reference labels, so inspect before publishing.
+- Source observations may be subjective, mislabeled, or culturally specific. High structural resemblance does not establish a causal explanation for laughter, an authentic performer trait, or general human preference. This stage is **pattern mining**, not a trained AI model. Future versions can add provenance review, reliability estimates, and actual trained models when appropriate datasets exist.
+
 ## Data shape
 
 Edit `data/atlas.json`:
@@ -115,6 +134,8 @@ The model intentionally separates **observation** (a bit uses repetition) from *
 - [x] Browser-local waveform and acoustic low-energy window analysis for authorized recordings
 - [x] Observed style averages with transparent sample counts (editorial seeds remain separate)
 - [x] Linked rhythm timelines to Atlas references (local identifiers)
+- [x] Human-annotated pattern similarity and recurring phase motif mining
+- [ ] Verified dataset provenance, annotation agreement, and learned models
 - [ ] Automatically aligned time annotations and editable waveform markers
 - [ ] Accessible graph connecting moments, signatures, and timings
 - [ ] Local-first PhiOS / PhiStream adapters (versioned JSON contract)
