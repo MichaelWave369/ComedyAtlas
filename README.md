@@ -6,12 +6,15 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 
 > The "Comedy Brain" is an interpretive map, **not a neuroscientific brain scan, clinical assessment, or objective measurement of talent**. The starter scores are editorial examples, not evidence-backed ratings. Humor is personal and contextual.
 
-## What works in v0.1
+## What works in v0.2
 
 - Interactive nine-node Comedy Brain: select a mechanism to see its meaning, cues, and the performers it connects to.
 - Compare two example performance profiles on all nine signals, with a transparent weighted-vector similarity estimate.
 - Search the seed catalog of sketches, styles, and sample-inspired musical moments; filter by mechanism.
 - Responsive layout, keyboard-friendly controls, static-host compatible, and zero runtime dependencies.
+- **Observation Studio** to add personal, source-attributed moments and score all nine signals from 0 to 5.
+- Switch signature comparisons between **editorial examples** and **averages derived from your own annotated moments** (sample count disclosed).
+- Local-only browser persistence with explicit JSON export and import. No backend, cloud sync, or content uploads.
 - Small, plain-JSON data model ready for contributions and later PhiOS/PhiStream integrations.
 
 ## Run locally
@@ -32,6 +35,21 @@ npm test
 ```
 
 Requires Node.js 20+ for tests. No npm install needed.
+
+## Personal observation notebook
+
+Open the **Studio** section. Enter a title, source, performer/character, original commentary, optional source URL and timestamp, and a 0–5 prominence rating for each signal. One or more scores must be nonzero.
+
+- Your entries remain on your device in `localStorage` until exported or cleared, subject to browser storage policies. Private browsing or clearing site data may delete them.
+- **Export JSON** creates a portable versioned backup (`ComedyAtlasPersonalObservations`, schema 1).
+- **Import JSON** merges valid observations; ID duplicates preserve your existing copy. Invalid files are rejected atomically.
+- Import size is capped at **1 MB** and the notebook is capped at **250 observations**.
+- The **My observations** signature mode computes the mean rating of each signal across personal observations linked to a selected performer/character. It does not learn a neural model or say who is funniest. No data is sent to the repo or an external server.
+- Source links are optional, validated to http(s), and open as external references. Do not paste copyrighted transcripts or private information into public contributions.
+
+### Data & model ethics
+
+The seed profiles are editorial examples, not verified biographical facts. The observational view is a sample mean, not a scientific measure of humor or audience response. Keep original observations, subjective interpretations, and audience reactions separate; the next model version can track evidence quality and annotator disagreement.
 
 ## Data shape
 
@@ -57,10 +75,10 @@ The model intentionally separates **observation** (a bit uses repetition) from *
 
 ## Roadmap
 
-- [ ] User-created entries with schema validation and export/import
-- [ ] Evidence, provenance, content timestamps, and source links for claims
+- [x] User-created local observations with schema validation and export/import
+- [x] Optional observation-level source links and timestamps (not independent verification)
 - [ ] Optional beat/timing annotation and waveform markers on **authorized** audio
-- [ ] Editable signatures and transparent confidence/provenance
+- [x] Observed style averages with transparent sample counts (editorial seeds remain separate)
 - [ ] Accessible graph and cross-medium connections
 - [ ] Local-first PhiOS / PhiStream adapters (versioned JSON contract)
 - [ ] Voluntary contributor review rather than definitive performer rankings

@@ -1,7 +1,7 @@
-import { MECHANISM_IDS, clampWeight, escapeHtml, filterMoments, similarity, validateAtlas } from "./core.mjs";
+import { MECHANISM_IDS, clampWeight, escapeHtml, filterMoments, similarity, validateAtlas } from "./core.mjs";\nimport { deriveObservedProfile, observationToMoment } from "./workspace.mjs";\nimport { mountStudio } from "./studio.mjs";
 
 const $ = (id) => document.getElementById(id);
-const state = { atlas:null, active:"timing", first:"norm", second:"tim", query:"", mechanism:"all" };
+const state = { atlas:null, active:"timing", first:"norm", second:"tim", query:"", mechanism:"all", observations:[], signatureMode:"editorial" };
 
 function mechanism(id) { return state.atlas.mechanisms.find((item) => item.id === id); }
 function profile(id) { return state.atlas.profiles.find((item) => item.id === id); }
@@ -78,7 +78,10 @@ function renderCatalog() {
   $("result-count").textContent = items.length + " of " + state.atlas.moments.length + " seed entries";
   $("moment-grid").innerHTML = items.length ? items.map((item) =>
     '<article class="moment"><span class="type">' + h(item.medium) + '</span><h3>' + h(item.title) + '</h3>'
-    + '<span class="source">' + h(item.source) + '</span><p>' + h(item.description) + '</p><div class="tags">'
+    + '<span class="source">' + h(item.source) + (item.timestamp ? " · " + h(item.timestamp) : "") + '</span><p>' + h(item.description) + '</p>'
+    + (item.personal ? '<span class="personal-label">PERSONAL OBSERVATION</span>' : '')
+    + (item.sourceUrl ? '<p><a class="source-link" href="' + h(item.sourceUrl) + '" target="_blank" rel="noopener noreferrer">Open source reference ↗</a></p>' : '')
+    + '<div class="tags">'
     + item.mechanisms.map((id) => '<span class="tag">' + h(mechanism(id)?.short || id) + '</span>').join("")
     + '</div></article>').join("") : '<p class="empty">No matches. Try another word or signal.</p>';
 }
@@ -93,6 +96,7 @@ function setup() {
     option.textContent = item.name;
     filter.appendChild(option);
   });
+  $("signature-mode").addEventListener("change", (e) => { state.signatureMode = e.target.value; renderSignatures(); });
   $("profile-a").addEventListener("change",(e) => { state.first = e.target.value; renderSignatures(); });
   $("profile-b").addEventListener("change",(e) => { state.second = e.target.value; renderSignatures(); });
   $("search").addEventListener("input",(e) => { state.query = e.target.value; renderCatalog(); });
