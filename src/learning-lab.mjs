@@ -25,7 +25,6 @@ export function mountLearningExperiment(){
   const text=(message,error=false)=>{status.textContent=message;status.dataset.error=String(error);};
   const runButton=$("learning-run");
   const exportButton=$("learning-export");
-  const testPanel=$("learning-holdout");
   const startPanel=$("learning-start");
   const resultsPanel=$("learning-results");
   for(const phase of PHASES){
