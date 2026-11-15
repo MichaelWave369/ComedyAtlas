@@ -114,6 +114,23 @@ function targetCounts(n,ratios){
   return {train,validation,test,unsplit:0};
 }
 
+function privacyMinimalPattern(rhythm){
+  const features=extractPattern(rhythm);
+  // Source labels and free-text timeline titles must not leave the local UI.
+  return {
+    totalSeconds:features.totalSeconds,
+    segmentCount:features.segmentCount,
+    phaseSequence:features.phaseSequence,
+    phaseShares:features.phaseShares,
+    energyCurve:features.energyCurve,
+    silenceCurve:features.silenceCurve,
+    payoffCurve:features.payoffCurve,
+    payoffPositions:features.payoffPositions,
+    meanEnergy:features.meanEnergy,
+    transitions:features.transitions
+  };
+}
+
 export function planResearchSplits(records,rhythms,rawOptions={}){
   const options=normalizePlanOptions(rawOptions);
   const cohort=buildResearchCohort(records,rhythms);
@@ -136,7 +153,7 @@ export function planResearchSplits(records,rhythms,rawOptions={}){
     buckets[label].flatMap(key=>byGroup.get(key).selected.map(record=>({
       id:record.id,groupKey:key,rhythmId:record.rhythmId,
       confidence:record.confidence,rightsStatus:record.rightsStatus,
-      pattern:extractPattern(cohort.sequenceMap.get(record.rhythmId))
+      pattern:privacyMinimalPattern(cohort.sequenceMap.get(record.rhythmId))
     })))
   ]));
   const splitReady=groupOrder.length>=3;
