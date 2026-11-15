@@ -6,7 +6,7 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 
 > The "Comedy Brain" is an interpretive map, **not a neuroscientific brain scan, clinical assessment, or objective measurement of talent**. The starter scores are editorial examples, not evidence-backed ratings. Humor is personal and contextual.
 
-## What works in v0.5
+## What works in v0.6
 
 - Interactive nine-node Comedy Brain: select a mechanism to see its meaning, cues, and the performers it connects to.
 - Compare two example performance profiles on all nine signals, with a transparent weighted-vector similarity estimate.
@@ -25,6 +25,10 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 - Explore nearest structural neighbors and two-/three-phase motifs supported by multiple independent saved examples.
 - Four original synthetic demo timelines work without local data. Personal notebook analysis remains a separate opt-in cohort.
 - Export versioned feature-only JSON without source audio, transcripts, or free-form segment notes.
+- **Evidence Workbench (v0.6):** link each locally saved rhythm annotation to an underlying source group, optional URL, annotator pseudonym, confidence estimate, review status, and self-reported rights status.
+- Track counts of reviewed source groups, double-coded groups, annotator identities, orphaned references, and cross-annotator structural resemblance.
+- Find recurring two/three-phase motifs counted per manually grouped **underlying source**, rather than per timeline. Inspect an explicit preliminary audit checklist.
+- Versioned local JSON backup/import and an opt-in feature manifest export that excludes source audio and free-form notes.
 - Small, plain-JSON data model ready for contributions and later PhiOS/PhiStream integrations.
 
 ## Run locally
@@ -100,9 +104,30 @@ Open **Patterns** in the navigation. The page starts with **four original fictio
   - **15% hold placement:** one minus mean absolute difference in time-bucket presence of manually annotated "silence" phases.
   - **10% punchline placement:** symmetric closest-distance similarity of normalized payoff onset locations, penalized for differences in the number of marked payoffs.
 - Durations are divided by each timeline's total duration, so two proportionally identical 10-second and 20-second timelines produce 100% structural resemblance even though their lengths differ. Reference BPM is **not** included because it is chosen by the annotator, not measured from the performer.
-- The **Nearest neighbors** view ranks other sequences by this same deterministic formula. **Recurring motifs** count two- or three-phase sequences, with support defined as the number of **distinct timelines** containing a motif at least once (not the number of times one creator repeated the pattern).
+- The **Nearest neighbors** view ranks other sequences by this same deterministic formula. **Recurring motifs** count two- or three-phase sequences, with support defined as the number of **distinct timelines** (not necessarily independent source performances) containing a motif at least once (not the number of times one creator repeated the pattern).
 - **Export feature dataset** downloads `ComedyAtlasPatternFeatures` schema 1. It excludes raw audio, transcripts, and free-form segment notes. It **does** include sequence titles and reference labels, so inspect before publishing.
 - Source observations may be subjective, mislabeled, or culturally specific. High structural resemblance does not establish a causal explanation for laughter, an authentic performer trait, or general human preference. This stage is **pattern mining**, not a trained AI model. Future versions can add provenance review, reliability estimates, and actual trained models when appropriate datasets exist.
+
+## Evidence Workbench (v0.6)
+
+Open **Evidence** after saving at least one **Rhythm** timeline. Each local evidence record links an annotation to:
+
+- A stable **source group key** naming one underlying original performance. All copies, edits, or repeated annotations of the same original bit should share a key. The app cannot verify that two separately named sources are independent.
+- A source title and optional http(s) URL (no credentials); a pseudonymous annotator ID; a subjective confidence label (`low/medium/high`); review status (`draft/reviewed`); and rights status (`unknown/reference-only/permission-claimed`). **Permission claimed is not permission verified.**
+- Brief notes explaining annotation methods and uncertainty, with a 600-character limit.
+
+The **Evidence quality snapshot** counts unique reviewed source groups separately from reviewers. Structural agreement compares phase-pattern similarity **only across distinct annotator pseudonyms within the same source group**, taking one latest reviewed record per pseudonym. It is an annotation comparison, **not** a measure of truth, laughing, or scientific reliability. Pseudonyms are user-entered; they do not establish that two reviewers are independent people.
+
+The **Source-independent motifs** panel counts a motif once per reviewed source group even if five annotated copies contain it. This is distinct from v0.5's uncorrected **distinct-timeline** motif count, which remains available for exploratory comparison.
+
+### Audit checklist, not permission to train
+
+The preliminary local checklist asks for **3** distinct reviewed source groups, **2** distinct annotator pseudonyms, **2** double-coded source groups, **3** source groups with *self-reported* permission claims, and zero missing referenced timelines. If all boxes are checked, this means **only** that those local metadata conditions are met. It does **not** verify the original source material, authorship, dataset licenses, identities, sample size sufficiency, agreement adequacy, or eligibility for model training. A separate independent legal and quality review is still necessary.
+
+- Stored in `localStorage` as `ComedyAtlasEvidenceNotebook`, schema 1. Limits: **250 entries** and **1 MB** per backup/import. Invalid backups are rejected without mutating the existing notebook; records whose linked timeline is missing can be preserved in an imported notebook but are excluded from metrics.
+- If an unreadable notebook is detected, writes are locked to prevent accidental overwrites; the recovery control prepares a raw backup before offering a reset.
+- **Export full notebook** preserves links, notes, pseudonyms and URLs. **Export feature manifest** includes metadata and derived rhythm features, excluding raw audio, transcripts, and free-form segment notes. Both exports may expose identifying source titles/URLs or pseudonyms, so inspect files before sharing.
+- Source links and rights claims are never fetched or externally checked. No network services, media uploads, automated source verification, paid APIs, or trained models are used.
 
 ## Data shape
 
@@ -135,7 +160,8 @@ The model intentionally separates **observation** (a bit uses repetition) from *
 - [x] Observed style averages with transparent sample counts (editorial seeds remain separate)
 - [x] Linked rhythm timelines to Atlas references (local identifiers)
 - [x] Human-annotated pattern similarity and recurring phase motif mining
-- [ ] Verified dataset provenance, annotation agreement, and learned models
+- [x] User-entered source metadata, duplicate-source grouping, and structural annotation-agreement diagnostics (unverified)
+- [ ] Independently verified provenance, rights, annotator independence, and actual learned models
 - [ ] Automatically aligned time annotations and editable waveform markers
 - [ ] Accessible graph connecting moments, signatures, and timings
 - [ ] Local-first PhiOS / PhiStream adapters (versioned JSON contract)

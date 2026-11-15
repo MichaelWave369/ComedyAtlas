@@ -4,6 +4,7 @@ import { mountStudio } from "./studio.mjs";
 import { mountRhythm } from "./rhythm-studio.mjs";
 import { mountAudioLab } from "./audio-lab.mjs";
 import { mountPatternLab } from "./pattern-lab.mjs";
+import { mountEvidenceWorkbench } from "./evidence-studio.mjs";
 
 const $ = (id) => document.getElementById(id);
 const state = { atlas:null, active:"timing", first:"norm", second:"tim", query:"", mechanism:"all", observations:[], signatureMode:"editorial" };
@@ -131,6 +132,7 @@ function setup() {
   });
   mountAudioLab();
   mountPatternLab();
+  mountEvidenceWorkbench();
 }
 async function init() {
   try {

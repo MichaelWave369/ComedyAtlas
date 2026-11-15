@@ -12,8 +12,8 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <a class="wordmark" href="#top" aria-label="ComedyAtlas home"><span class="brand-symbol" aria-hidden="true">◉</span> COMEDY<span>ATLAS</span><span class="version"> / v0.5</span></a>
-    <nav aria-label="Main navigation"><a href="#brain">The Brain</a><a href="#signatures">Signatures</a><a href="#catalog">Atlas</a><a href="#studio">Studio</a><a href="#rhythm">Rhythm</a><a href="#audio-lab">Audio Lab</a><a href="#patterns">Patterns</a><a href="https://github.com/MichaelWave369/ComedyAtlas">GitHub ↗</a></nav>
+    <a class="wordmark" href="#top" aria-label="ComedyAtlas home"><span class="brand-symbol" aria-hidden="true">◉</span> COMEDY<span>ATLAS</span><span class="version"> / v0.6</span></a>
+    <nav aria-label="Main navigation"><a href="#brain">The Brain</a><a href="#signatures">Signatures</a><a href="#catalog">Atlas</a><a href="#studio">Studio</a><a href="#rhythm">Rhythm</a><a href="#audio-lab">Audio Lab</a><a href="#patterns">Patterns</a><a href="#evidence">Evidence</a><a href="https://github.com/MichaelWave369/ComedyAtlas">GitHub ↗</a></nav>
   </header>
 
   <main id="main">
@@ -287,15 +287,83 @@
           <ol id="pattern-neighbors" class="pattern-neighbors"></ol>
           <div class="pattern-sidebar-rule"></div>
           <h3>Recurring comedy motifs</h3>
-          <p class="fine-print">Only count a motif once per distinct timeline. Two phrases in one sketch do not count as two independent examples.</p>
+          <p class="fine-print">Version 0.5 counts distinct timelines, not independently sourced performances. Two timelines may still describe the same original bit. Use Evidence to group duplicated sources.</p>
           <div class="pattern-motif-options">
             <label for="pattern-motif-length">Motif size<select id="pattern-motif-length"><option value="2">Two phases</option><option value="3">Three phases</option></select></label>
-            <label for="pattern-min-support">Minimum independent examples<select id="pattern-min-support"><option value="2">At least 2</option><option value="3">At least 3</option><option value="4">At least 4</option></select></label>
+            <label for="pattern-min-support">Minimum distinct timelines<select id="pattern-min-support"><option value="2">At least 2</option><option value="3">At least 3</option><option value="4">At least 4</option></select></label>
           </div>
           <div id="pattern-motifs" class="pattern-motifs"></div>
           <div class="pattern-sidebar-rule"></div>
           <h3>What does a resemblance % mean?</h3>
           <p class="fine-print">A weighted comparison of phase proportions (30%), ordered transitions (25%), perceived energy shape (20%), hold placement (15%), and payoff placement (10%). All timing is normalized to each annotation's full duration. High scores mean similar <em>structure</em>, not that a performance is funny, original, or scientifically effective.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="evidence" class="section" aria-labelledby="evidence-heading">
+      <div class="section-head">
+        <div><p class="eyebrow">09 / EVIDENCE & READINESS</p><h2 id="evidence-heading">Trace the laugh.</h2></div>
+        <p>Separate the joke, its source, and the person doing the annotation.</p>
+      </div>
+      <div class="studio-intro">
+        <strong>Independent examples are not simply separate files.</strong> Group each original performance under one stable source key, even if it is reposted, sampled, or annotated multiple times. Every annotation links to a saved Rhythm Engine timeline. Confidence, reviewer identity, provenance, and permission are self-reported until independently verified.
+      </div>
+      <div class="evidence-layout">
+        <div class="evidence-main">
+          <form id="evidence-form" class="evidence-form">
+            <h3>Register an annotated source</h3>
+            <div class="evidence-form-grid">
+              <label for="evidence-rhythm">Saved rhythm timeline<select id="evidence-rhythm" required></select></label>
+              <label for="evidence-group">Original source group key<input id="evidence-group" maxlength="64" required placeholder="episode-01-specific-bit"></label>
+              <label for="evidence-title">Original source title<input id="evidence-title" maxlength="160" required placeholder="Name of performance / source"></label>
+              <label for="evidence-url">Source URL (optional)<input id="evidence-url" type="url" maxlength="2048" placeholder="https://example.org/reference"></label>
+              <label for="evidence-annotator">Annotator pseudonym<input id="evidence-annotator" maxlength="60" required placeholder="analyst-01" autocomplete="off"></label>
+              <label for="evidence-confidence">Personal annotation confidence<select id="evidence-confidence">
+                <option value="low">Low: uncertain</option><option value="medium" selected>Medium: tentative</option><option value="high">High: personally confident</option>
+              </select></label>
+              <label for="evidence-review">Personal review status<select id="evidence-review">
+                <option value="draft" selected>Draft / unchecked</option><option value="reviewed">Reviewed by annotator</option>
+              </select></label>
+              <label for="evidence-rights">Source reuse status (self-reported)<select id="evidence-rights">
+                <option value="unknown" selected>Unknown / not checked</option>
+                <option value="reference-only">Reference only; no media reuse</option>
+                <option value="permission-claimed">Permission claimed, not verified</option>
+              </select></label>
+              <label class="wide" for="evidence-note">Methods, caveats, or uncertainty<textarea id="evidence-note" rows="3" maxlength="600" placeholder="How was this annotated? What might be uncertain?"></textarea></label>
+            </div>
+            <p class="fine-print">The group key identifies one underlying original bit. Use the same key for every duplicate, remix, repost or second annotator of that performance. Distinct keys are only a claim of independence, not proof. Do not add private identifiers or copyrighted transcripts.</p>
+            <button type="submit" id="evidence-add" class="primary-button">Add evidence link ↗</button>
+            <p id="evidence-status" role="status" aria-live="polite">Loading evidence notebook…</p>
+          </form>
+          <div class="evidence-notebook">
+            <div class="evidence-notebook-top"><h3>Local evidence notebook</h3><p id="evidence-count" class="result-count"></p></div>
+            <div class="evidence-actions">
+              <button type="button" id="evidence-refresh" class="secondary-button">Refresh timelines</button>
+              <button type="button" id="evidence-export" class="secondary-button">Export full notebook</button>
+              <button type="button" id="evidence-manifest" class="primary-button">Export feature manifest</button>
+              <label for="evidence-import" class="import-label">Import notebook<input type="file" id="evidence-import" accept=".json,application/json"></label>
+              <button type="button" id="evidence-unlock" class="danger-button" hidden>Recover / reset unreadable storage</button>
+            </div>
+            <p class="fine-print">A full backup includes annotations, links, source URLs, and pseudonyms. The feature manifest excludes free-text notes and raw audio, but still contains source URLs and names. Review both before sharing. Missing linked rhythms are preserved, not counted.</p>
+            <div id="evidence-cards" class="evidence-cards"></div>
+          </div>
+        </div>
+        <aside class="evidence-sidebar">
+          <h3>Evidence quality snapshot</h3>
+          <div id="evidence-stats" class="evidence-stats" aria-label="Evidence notebook statistics"></div>
+          <p id="evidence-summary-note" class="fine-print"></p>
+          <h3>Preliminary audit checklist</h3>
+          <ul id="evidence-checks" class="evidence-checks"></ul>
+          <p id="evidence-conclusion" class="fine-print"></p>
+          <p class="fine-print">This checklist does not grant permission to train on recordings. Identity, source claims and rights must be independently verified, and test/train splits must avoid shared original source groups.</p>
+          <div class="pattern-sidebar-rule"></div>
+          <h3>Source-independent motifs</h3>
+          <p class="fine-print">A shared phase sequence counts once per reviewed source group, regardless of how many timelines or people annotated that source. This corrects the distinct-timeline shortcut in v0.5.</p>
+          <div class="pattern-motif-options">
+            <label for="evidence-motif-length">Motif size<select id="evidence-motif-length"><option value="2">Two phases</option><option value="3">Three phases</option></select></label>
+            <label for="evidence-min-sources">Minimum source groups<select id="evidence-min-sources"><option value="2">At least 2</option><option value="3">At least 3</option><option value="4">At least 4</option></select></label>
+          </div>
+          <div id="evidence-motifs" class="pattern-motifs"></div>
         </aside>
       </div>
     </section>
