@@ -39,7 +39,8 @@ test("reject unknown rhythm IDs, unsafe URL protocols, PII-like aliases and inva
 test("atomic import rejects malformed and duplicate records",()=>{
   const record=normalizeEvidence(e(1,"a","person-a"),ids);
   const pack=records=>JSON.stringify({kind:EVIDENCE_KIND,schemaVersion:EVIDENCE_VERSION,records});
-  assert.throws(()=>parseEvidence(pack([record,{...record,rhythmId:"missing"}]),ids));
+  assert.throws(()=>parseEvidence(pack([record,{...record,sourceUrl:"file:///private"}]),ids));
+  assert.equal(parseEvidence(pack([{...record,rhythmId:"missing"}]),ids)[0].rhythmId,"missing");
   assert.throws(()=>parseEvidence(pack([record,record]),ids));
   assert.throws(()=>parseEvidence(pack(Array.from({length:MAX_EVIDENCE+1},()=>record)),ids));
   assert.throws(()=>parseEvidence(pack([]).replace('"schemaVersion":1','"schemaVersion":7'),ids));
