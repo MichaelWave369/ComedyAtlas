@@ -12,8 +12,8 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <a class="wordmark" href="#top" aria-label="ComedyAtlas home"><span class="brand-symbol" aria-hidden="true">◉</span> COMEDY<span>ATLAS</span><span class="version"> / v0.8</span></a>
-    <nav aria-label="Main navigation"><a href="#brain">The Brain</a><a href="#signatures">Signatures</a><a href="#catalog">Atlas</a><a href="#studio">Studio</a><a href="#rhythm">Rhythm</a><a href="#audio-lab">Audio Lab</a><a href="#patterns">Patterns</a><a href="#evidence">Evidence</a><a href="#research">Research</a><a href="#learning">Learning</a><a href="https://github.com/MichaelWave369/ComedyAtlas">GitHub ↗</a></nav>
+    <a class="wordmark" href="#top" aria-label="ComedyAtlas home"><span class="brand-symbol" aria-hidden="true">◉</span> COMEDY<span>ATLAS</span><span class="version"> / v0.9</span></a>
+    <nav aria-label="Main navigation"><a href="#brain">The Brain</a><a href="#signatures">Signatures</a><a href="#catalog">Atlas</a><a href="#studio">Studio</a><a href="#rhythm">Rhythm</a><a href="#audio-lab">Audio Lab</a><a href="#patterns">Patterns</a><a href="#evidence">Evidence</a><a href="#research">Research</a><a href="#learning">Learning</a><a href="#reliability">Reliability</a><a href="https://github.com/MichaelWave369/ComedyAtlas">GitHub ↗</a></nav>
   </header>
 
   <main id="main">
@@ -495,7 +495,78 @@
         </aside>
       </div>
     </section>
+
+    <section id="reliability" class="section" aria-labelledby="reliability-heading">
+      <div class="section-head">
+        <div><p class="eyebrow">12 / COMEDY BRAIN RELIABILITY</p><h2 id="reliability-heading">Does it hold up?</h2></div>
+        <p>Repeat source-group evaluations and see how much results depend on the split.</p>
+      </div>
+      <div class="studio-intro">
+        <strong>One lucky seed is not a research result.</strong> Re-run v0.8's train-only Markov learner against its majority-phase baseline on different deterministic source-group splits. Validate smoothing within each split, then compare both models on the same held-out groups. Use paired resampling of whole sources to explore uncertainty. This is a sensitivity diagnostic, not a fresh external benchmark.
+      </div>
+      <div class="reliability-layout">
+        <div class="reliability-main">
+          <div class="reliability-controls">
+            <label for="reliability-cohort">Dataset
+              <select id="reliability-cohort">
+                <option value="synthetic">Original synthetic demonstration (36 examples)</option>
+                <option value="personal">My reviewed local source groups (12+ required)</option>
+              </select>
+            </label>
+            <label for="reliability-ratio">Split ratio
+              <select id="reliability-ratio">
+                <option value="balanced">60 / 20 / 20</option>
+                <option value="default" selected>70 / 15 / 15</option>
+                <option value="trainingHeavy">80 / 10 / 10</option>
+              </select>
+            </label>
+            <label for="reliability-repeats">Repetitions
+              <select id="reliability-repeats">
+                <option value="12">12</option><option value="24" selected>24</option><option value="36">36</option>
+              </select>
+            </label>
+            <label for="reliability-seed">Starting seed
+              <input type="number" id="reliability-seed" min="0" max="999999" step="1" value="369">
+            </label>
+          </div>
+          <div class="reliability-buttons">
+            <button id="reliability-run" type="button" class="primary-button">Run reliability study ↗</button>
+            <button id="reliability-export" type="button" class="secondary-button" disabled>Export aggregate report ↓</button>
+          </div>
+          <p id="reliability-status" role="status" aria-live="polite">Ready to run locally.</p>
+          <div id="reliability-results" hidden>
+            <div id="reliability-counts" class="reliability-stats" aria-label="Source-group coverage and experiment counts"></div>
+            <div class="reliability-summary">
+              <div><span>Mean advantage in group-balanced log-loss</span><strong id="reliability-effect">—</strong><small>Positive means the learned model predicts the annotations better; lower log-loss is better.</small></div>
+              <div><span>Middle 80% across seeded splits</span><strong id="reliability-band">—</strong><small>10th–90th percentile of observed split outcomes, not an uncertainty confidence interval.</small></div>
+              <div><span>Mean accuracy advantage</span><strong id="reliability-accuracy">—</strong><small>Positive means more next-phase labels predicted correctly.</small></div>
+              <div><span>Accuracy advantage across seeded splits</span><strong id="reliability-accuracy-band">—</strong><small>Middle 80% across repeated, overlapping source groups.</small></div>
+            </div>
+            <p id="reliability-interpretation" class="learning-comparison"></p>
+            <h3>Individual split results</h3>
+            <p class="fine-print">A test source can appear in multiple repetitions. A within-split group bootstrap uses whole source groups (240 resamples) and shows an exploratory 10th–90th percentile of the paired log-loss advantage. This is not a 95% confidence interval.</p>
+            <div class="reliability-table-scroll">
+              <table class="reliability-table">
+                <caption>Baseline vs learned model on paired held-out original-source groups</caption>
+                <thead><tr><th scope="col">Run</th><th scope="col">Seed</th><th scope="col">Test groups</th><th scope="col">Smoothing</th><th scope="col">Baseline loss</th><th scope="col">Learned loss</th><th scope="col">Advantage</th><th scope="col">Bootstrap middle 80%</th></tr></thead>
+                <tbody id="reliability-run-rows"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <aside class="reliability-side">
+          <h3>What counts as reliability?</h3>
+          <p>Performance should not collapse when we change which original-source groups are held out. We compare the learned predictor with the same baseline on every split, instead of cherry-picking the nicest result.</p>
+          <h3>What does the interval mean?</h3>
+          <p>A descriptive spread across repeated, overlapping splits. Each per-split bootstrap samples whole source groups, so long sketches do not masquerade as hundreds of independent observations. These are not calibrated confidence intervals.</p>
+          <h3>Important limits</h3>
+          <p id="reliability-demo-note" class="fine-print">The original synthetic examples reuse four fictional template families, so strong results cannot establish generalization to real comedy.</p>
+          <ul id="reliability-warnings" class="reliability-warnings"></ul>
+          <p class="fine-print">No comedy-quality score, speech recognition, audio upload, paid service or external model is involved. Rights and source independence are not independently verified.</p>
+        </aside>
+      </div>
+    </section>
   </main>
-  <footer><div><strong>COMEDY<span>ATLAS</span></strong><p>A living map of the ridiculous.</p></div><p>Open source · No tracking · Editorial examples only · <a href="https://github.com/MichaelWave369/ComedyAtlas">Contribute on GitHub ↗</a></p></footer>
+  <footer><div><strong>COMEDY<span>ATLAS</span></strong><p>A living map of the ridiculous.</p></div><p>Open source · No tracking · Local-first research experiments · <a href="https://github.com/MichaelWave369/ComedyAtlas">Contribute on GitHub ↗</a></p></footer>
 </body>
 </html>

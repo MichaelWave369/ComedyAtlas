@@ -120,3 +120,22 @@ test("Local experiment invalidates results on new Evidence/Rhythm annotations",(
   assert.ok(lab.includes("exportLearningReport"));
   assert.ok(lab.includes("runLearningExperiment"));
 });
+
+test("Reliability Lab mounts with live controls, source-aware evaluations and privacy boundaries",()=>{
+  const lab=read("src/reliability-lab.mjs");
+  const ids=new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]));
+  for(const match of lab.matchAll(/\$\("([^"]+)"\)/g))
+    assert.ok(ids.has(match[1]),"Missing reliability control: "+match[1]);
+  assert.ok(app.includes('import { mountReliabilityLab } from "./reliability-lab.mjs"'));
+  assert.ok(app.includes("mountReliabilityLab()"));
+  assert.ok(html.includes('href="#reliability"'));
+  assert.ok(html.includes("source-group evaluations"));
+  assert.ok(html.includes("not a 95% confidence interval"));
+});
+test("Reliability Lab clears stale personal results after annotation changes",()=>{
+  const lab=read("src/reliability-lab.mjs");
+  assert.ok(lab.includes("comedyatlas:rhythms-updated"));
+  assert.ok(lab.includes("comedyatlas:evidence-updated"));
+  assert.ok(lab.includes("exportReliabilityStudy"));
+  assert.ok(lab.includes("runReliabilityStudy"));
+});
