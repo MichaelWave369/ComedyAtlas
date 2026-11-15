@@ -12,8 +12,8 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <a class="wordmark" href="#top" aria-label="ComedyAtlas home"><span class="brand-symbol" aria-hidden="true">◉</span> COMEDY<span>ATLAS</span><span class="version"> / v0.6</span></a>
-    <nav aria-label="Main navigation"><a href="#brain">The Brain</a><a href="#signatures">Signatures</a><a href="#catalog">Atlas</a><a href="#studio">Studio</a><a href="#rhythm">Rhythm</a><a href="#audio-lab">Audio Lab</a><a href="#patterns">Patterns</a><a href="#evidence">Evidence</a><a href="https://github.com/MichaelWave369/ComedyAtlas">GitHub ↗</a></nav>
+    <a class="wordmark" href="#top" aria-label="ComedyAtlas home"><span class="brand-symbol" aria-hidden="true">◉</span> COMEDY<span>ATLAS</span><span class="version"> / v0.7</span></a>
+    <nav aria-label="Main navigation"><a href="#brain">The Brain</a><a href="#signatures">Signatures</a><a href="#catalog">Atlas</a><a href="#studio">Studio</a><a href="#rhythm">Rhythm</a><a href="#audio-lab">Audio Lab</a><a href="#patterns">Patterns</a><a href="#evidence">Evidence</a><a href="#research">Research</a><a href="https://github.com/MichaelWave369/ComedyAtlas">GitHub ↗</a></nav>
   </header>
 
   <main id="main">
@@ -364,6 +364,63 @@
             <label for="evidence-min-sources">Minimum source groups<select id="evidence-min-sources"><option value="2">At least 2</option><option value="3">At least 3</option><option value="4">At least 4</option></select></label>
           </div>
           <div id="evidence-motifs" class="pattern-motifs"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="research" class="section" aria-labelledby="research-heading">
+      <div class="section-head">
+        <div><p class="eyebrow">10 / COMEDY BRAIN RESEARCH</p><h2 id="research-heading">Test the pattern.</h2></div>
+        <p>Plan without leaking the same comedy source into both learning and evaluation.</p>
+      </div>
+      <div class="studio-intro">
+        <strong>This is a research split preview, not a trained model or permission to train.</strong>
+        Saved, reviewed Evidence annotations are grouped by the underlying original source key. Drafts and orphaned rhythm links are excluded. Any groups sharing a timeline ID or identical reference URL across different source keys are quarantined. Annotations are never uploaded.
+      </div>
+      <div class="research-layout">
+        <div class="research-main">
+          <div class="research-controls">
+            <label for="research-ratio">Source-group split ratio
+              <select id="research-ratio">
+                <option value="balanced">60 / 20 / 20</option>
+                <option value="default" selected>70 / 15 / 15</option>
+                <option value="trainingHeavy">80 / 10 / 10</option>
+              </select>
+            </label>
+            <label for="research-seed">Deterministic assignment seed
+              <input type="number" id="research-seed" value="369" min="0" max="999999" step="1">
+            </label>
+          </div>
+          <div class="research-buttons">
+            <button type="button" id="research-refresh" class="secondary-button">Refresh notebooks</button>
+            <button type="button" id="research-export" class="primary-button" disabled>Export research preview ↓</button>
+          </div>
+          <p id="research-status" role="status" aria-live="polite">Loading saved annotations…</p>
+          <p id="research-seed-label" class="fine-print"></p>
+          <div id="research-counts" class="research-metrics" aria-label="Research evidence counts"></div>
+          <h3>Train / validation / test</h3>
+          <p id="research-plan-state" class="fine-print"></p>
+          <div id="research-partitions" class="research-partitions" aria-label="Source-disjoint dataset partitions"></div>
+          <h3>Annotation disagreement inspector</h3>
+          <p class="fine-print">Compares the latest reviewed annotation per pseudonym in a source group. Structural scores are descriptive and do not prove one person is right. Pseudonyms aren't verified identities.</p>
+          <div id="research-disagreements" class="research-disagreements"></div>
+        </div>
+        <aside class="research-side">
+          <h3>Audit warnings</h3>
+          <ul id="research-warnings" class="research-warnings"></ul>
+          <div class="pattern-sidebar-rule"></div>
+          <h3>Quarantined sources</h3>
+          <div id="research-quarantine" class="research-quarantine">
+            <p class="fine-print">Conflicting source references are excluded from all three partitions.</p>
+          </div>
+          <div class="pattern-sidebar-rule"></div>
+          <h3>Local preview checklist</h3>
+          <ul id="research-checks" class="evidence-checks"></ul>
+          <p id="research-checklist-state" class="fine-print"></p>
+          <div class="pattern-sidebar-rule"></div>
+          <h3>Why this matters</h3>
+          <p class="fine-print">The same original performance appearing in training and test data can make evaluation results look better than they are. Grouped splitting reduces this one leakage route, but cannot discover mislabeled, reposted, edited or copied sources automatically. The URL check is conservative and can flag unrelated works on a shared page.</p>
+          <p class="fine-print">No sources, rights or annotator identities have been independently audited. The export contains source keys, rhythm IDs and derived timing features, but not raw audio, transcripts, source URLs, reviewer pseudonyms or free-text notes. Inspect it before sharing.</p>
         </aside>
       </div>
     </section>

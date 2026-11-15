@@ -82,3 +82,22 @@ test("Recovery UI does not appear unless unreadable evidence is detected",()=>{
   assert.ok(html.includes('id="evidence-unlock"'));
   assert.ok(styles.includes(".evidence-actions button[hidden]{display:none}"));
 });
+
+test("Research Pipeline initializes and every referenced DOM control exists",()=>{
+  const lab=read("src/research-lab.mjs");
+  const ids=new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]));
+  for(const match of lab.matchAll(/\$\("([^"]+)"\)/g))
+    assert.ok(ids.has(match[1]),"Missing research control: "+match[1]);
+  assert.ok(app.includes('import { mountResearchPipeline } from "./research-lab.mjs"'));
+  assert.ok(app.includes("mountResearchPipeline()"));
+  assert.ok(html.includes('href="#research"'));
+  assert.ok(html.includes('id="research-partitions"'));
+  assert.ok(html.includes("not a trained model or permission to train"));
+});
+test("Research Pipeline refreshes after Evidence and Rhythm saves",()=>{
+  const lab=read("src/research-lab.mjs");
+  const evidence=read("src/evidence-studio.mjs");
+  assert.ok(lab.includes("comedyatlas:rhythms-updated"));
+  assert.ok(lab.includes("comedyatlas:evidence-updated"));
+  assert.ok(evidence.includes('document.dispatchEvent(new Event("comedyatlas:evidence-updated"))'));
+});

@@ -111,6 +111,7 @@ export function mountEvidenceWorkbench(){
       announce("Browser storage failed; data only exists in this tab. Export a backup before leaving. "+error.message,true);
     }
     render();
+    document.dispatchEvent(new Event("comedyatlas:evidence-updated"));
   }
   function readRhythms(notify=false){
     try{
@@ -196,7 +197,9 @@ export function mountEvidenceWorkbench(){
     try{
       localStorage.removeItem(EVIDENCE_KEY);
       records=[];storageLocked=false;lastBrokenText=null;
-      render();announce("Storage reset after preparing raw backup.");
+      render();
+      document.dispatchEvent(new Event("comedyatlas:evidence-updated"));
+      announce("Storage reset after preparing raw backup.");
     }catch(error){announce("Could not reset local storage: "+error.message,true);}
   });
   document.addEventListener("comedyatlas:rhythms-updated",()=>readRhythms(false));
