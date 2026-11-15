@@ -6,7 +6,7 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 
 > The "Comedy Brain" is an interpretive map, **not a neuroscientific brain scan, clinical assessment, or objective measurement of talent**. The starter scores are editorial examples, not evidence-backed ratings. Humor is personal and contextual.
 
-## What works in v0.6
+## What works in v0.7
 
 - Interactive nine-node Comedy Brain: select a mechanism to see its meaning, cues, and the performers it connects to.
 - Compare two example performance profiles on all nine signals, with a transparent weighted-vector similarity estimate.
@@ -29,6 +29,10 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 - Track counts of reviewed source groups, double-coded groups, annotator identities, orphaned references, and cross-annotator structural resemblance.
 - Find recurring two/three-phase motifs counted per manually grouped **underlying source**, rather than per timeline. Inspect an explicit preliminary audit checklist.
 - Versioned local JSON backup/import and an opt-in feature manifest export that excludes source audio and free-form notes.
+- **Research Pipeline (v0.7):** deterministic source-group-disjoint train/validation/test previews with configurable split ratios and seed.
+- Quarantine suspicious shared rhythm IDs or source URLs across separately named source groups, rather than let them leak between partitions.
+- Inspect disagreements between independently named reviewers on the same source, including phase mix, transitions, energy, holds, and payoff timing.
+- Export an explicitly unauthorized, feature-only research **planning** manifest. No audio, transcripts, notes, original URLs, or reviewer pseudonyms are exported.
 - Small, plain-JSON data model ready for contributions and later PhiOS/PhiStream integrations.
 
 ## Run locally
@@ -129,6 +133,25 @@ The preliminary local checklist asks for **3** distinct reviewed source groups, 
 - **Export full notebook** preserves links, notes, pseudonyms and URLs. **Export feature manifest** includes metadata and derived rhythm features, excluding raw audio, transcripts, and free-form segment notes. Both exports may expose identifying source titles/URLs or pseudonyms, so inspect files before sharing.
 - Source links and rights claims are never fetched or externally checked. No network services, media uploads, automated source verification, paid APIs, or trained models are used.
 
+## Research Pipeline (v0.7)
+
+Open **Research** to prepare a deterministic **planning preview** from your **saved and reviewed** Evidence Workbench annotations.
+
+The pipeline:
+
+1. Reads validated local Rhythm and Evidence notebooks. **Drafts and missing rhythm links are excluded**, not silently repaired.
+2. Deduplicates repeated annotations from the **same annotator pseudonym** within each underlying original source group, keeping the most recently created reviewed record.
+3. Detects source-group collisions where two different `groupKey`s link to the **same saved rhythm ID** or the **same canonical http(s) URL** (ignoring URL fragment timestamps). Both groups are **quarantined**, with reasons shown. This is conservative: a single webpage can represent multiple different works. It does **not** automatically identify edited copies or misnamed original sources.
+4. For three or more eligible source groups, assigns each complete group to **one and only one** train, validation, or test partition. You can choose ratios (60/20/20, 70/15/15, 80/10/10) and an integer seed (0–999999). It uses stable, seeded non-cryptographic ordering, with at least one source group per partition. On very small datasets, actual counts may deviate from the displayed target percentages. **Fewer than three eligible groups produce no split**, not a misleading training plan.
+5. Inspects inter-annotator disagreement for source groups with two or more distinct pseudonyms. Pairwise structural resemblance uses the v0.5 deterministic feature comparison. This is **not** inter-rater reliability (such as Cohen's κ), because our labels are timing vectors, identities are unverified, and sample sizes may be tiny.
+6. Can export an opt-in `ComedyAtlasResearchSplitPreview` schema 1 JSON file with group keys, rhythm IDs, derived phase signatures, partition assignments, explicitly self-reported rights labels, audit flags, and warnings. It **does not export raw audio, transcripts, URLs, reviewer pseudonyms, or free-form notes**, though identifying information can still be contained in human-entered group keys or rhythm IDs. Review the preview before sharing.
+
+### Strict research boundaries
+
+The pipeline **does not train a model** or authorize training. Self-reported permission is not legal clearance; source keys are not independently authenticated; pseudonyms do not verify independent human reviewers. A green preliminary metadata checklist means **only** that fields meet locally defined screening criteria. Independent rights, source provenance, methodological validation, annotator independence, data representativeness, and independent human review are essential before real training.
+
+This does not prevent every form of evaluation leakage. Two different URLs may still host copies of the same content. A source group can also span multiple video edits or performances if entered incorrectly. The system surfaces what it can detect and avoids silently treating recordings as verified.
+
 ## Data shape
 
 Edit `data/atlas.json`:
@@ -161,6 +184,7 @@ The model intentionally separates **observation** (a bit uses repetition) from *
 - [x] Linked rhythm timelines to Atlas references (local identifiers)
 - [x] Human-annotated pattern similarity and recurring phase motif mining
 - [x] User-entered source metadata, duplicate-source grouping, and structural annotation-agreement diagnostics (unverified)
+- [x] Group-disjoint research partition previews, duplicate source quarantine, and annotation disagreement inspection
 - [ ] Independently verified provenance, rights, annotator independence, and actual learned models
 - [ ] Automatically aligned time annotations and editable waveform markers
 - [ ] Accessible graph connecting moments, signatures, and timings
