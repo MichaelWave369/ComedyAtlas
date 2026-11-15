@@ -6,6 +6,7 @@ import { mountAudioLab } from "./audio-lab.mjs";
 import { mountPatternLab } from "./pattern-lab.mjs";
 import { mountEvidenceWorkbench } from "./evidence-studio.mjs";
 import { mountResearchPipeline } from "./research-lab.mjs";
+import { mountLearningExperiment } from "./learning-lab.mjs";
 
 const $ = (id) => document.getElementById(id);
 const state = { atlas:null, active:"timing", first:"norm", second:"tim", query:"", mechanism:"all", observations:[], signatureMode:"editorial" };
@@ -135,6 +136,7 @@ function setup() {
   mountPatternLab();
   mountEvidenceWorkbench();
   mountResearchPipeline();
+  mountLearningExperiment();
 }
 async function init() {
   try {

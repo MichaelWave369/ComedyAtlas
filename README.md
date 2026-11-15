@@ -6,7 +6,7 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 
 > The "Comedy Brain" is an interpretive map, **not a neuroscientific brain scan, clinical assessment, or objective measurement of talent**. The starter scores are editorial examples, not evidence-backed ratings. Humor is personal and contextual.
 
-## What works in v0.7
+## What works in v0.8
 
 - Interactive nine-node Comedy Brain: select a mechanism to see its meaning, cues, and the performers it connects to.
 - Compare two example performance profiles on all nine signals, with a transparent weighted-vector similarity estimate.
@@ -33,6 +33,10 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 - Quarantine suspicious shared rhythm IDs or source URLs across separately named source groups, rather than let them leak between partitions.
 - Inspect disagreements between independently named reviewers on the same source, including phase mix, transitions, energy, holds, and payoff timing.
 - Export an explicitly unauthorized, feature-only research **planning** manifest. No audio, transcripts, notes, original URLs, or reviewer pseudonyms are exported.
+- **Local Learning Experiment (v0.8):** fit a transparent smoothed first-order Markov transition model for predicting the next manually annotated comedy phase, alongside a majority-next-phase baseline.
+- Tune smoothing only on validation source groups, report group-balanced accuracy/log-loss on held-out test groups, and inspect a confusion matrix and interactive phase probability predictions.
+- Try 36 entirely synthetic original demonstration sequences, or explicitly opt into your own saved reviewed annotation features (minimum six eligible source groups). No recordings are uploaded or used.
+- Download a minimal aggregate model/evaluation report that omits source names, original URLs, pseudonyms, free-text notes, and raw audio.
 - Small, plain-JSON data model ready for contributions and later PhiOS/PhiStream integrations.
 
 ## Run locally
@@ -152,6 +156,27 @@ The pipeline **does not train a model** or authorize training. Self-reported per
 
 This does not prevent every form of evaluation leakage. Two different URLs may still host copies of the same content. A source group can also span multiple video edits or performances if entered incorrectly. The system surfaces what it can detect and avoids silently treating recordings as verified.
 
+## Local Learning Experiment (v0.8)
+
+Open **Learning** in the navigation.
+
+### Task, not a "funny score"
+
+For a sequence of manually annotated comedy phases, predict the **next phase** from the **previous phase**. A first-order Markov model fits the counts of each ordered phase transition on **training source groups only**. It uses additive smoothing to produce non-zero probabilities for all six possible next phases. A baseline model always predicts the most common next phase observed in the training split. Neither model looks at words, jokes, audio, intent, laughter, or any audience response.
+
+### Reproducible training and evaluation
+
+- Choose **Synthetic demonstration**, which generates 36 fictional, programmatic timing examples from **four reused template families**. These are not 36 independent human performances, so synthetic benchmark results are *illustrative*, not external evidence. They remain separate from local storage.
+- Or choose **My reviewed source groups**. This explicitly reads saved v0.6 Evidence/Rhythm notebooks and requires at least **six eligible, non-conflicting reviewed source groups**. The v0.7 research pipeline excludes orphan references, drafts, and quarantined cross-source conflicts, and keeps each original source group in exactly one partition.
+- Within each source group, this model uses only the lexicographically first eligible reviewed evidence annotation, not all its reviewers. Additional annotations remain available for disagreement research and never give one source extra votes in training.
+- Choose a seed and source-group split ratio. Model fitting happens **only on train**, additive-smoothing strength is selected among 0.25, 0.5, 1, 2, and 4 using **validation group-balanced log-loss**, and both learned and baseline models are evaluated on the same held-out **test** groups.
+- The report shows group-balanced **accuracy** (fraction of correctly predicted next phase) and **log-loss** (penalizing confident incorrect predictions), transition counts, confusion matrix and conditional phase probabilities. Each original source group has equal weight in group-balanced metrics. It does not indicate humor effectiveness.
+- **Do not tune hyperparameters, model features, or seeds based on test results and then claim a pristine held-out result.** The app is exploratory and cannot enforce a once-ever sealed test.
+- All computation is browser-local using plain JavaScript. No paid services, neural model weights, media upload, cloud model, or third-party network call is involved.
+- Export **ComedyAtlasLocalLearningExperiment** schema 1 JSON with aggregate results and model transition counts. It includes neither source group IDs, reviewer names, URLs, transcripts, recording bytes, nor personal timeline titles. Model counts may still reveal patterns from a small dataset: inspect the file before publishing.
+
+A more complicated model is **not automatically better**. The page explicitly reports when the learned model fails to beat the simple baseline on the test data.
+
 ## Data shape
 
 Edit `data/atlas.json`:
@@ -185,7 +210,8 @@ The model intentionally separates **observation** (a bit uses repetition) from *
 - [x] Human-annotated pattern similarity and recurring phase motif mining
 - [x] User-entered source metadata, duplicate-source grouping, and structural annotation-agreement diagnostics (unverified)
 - [x] Group-disjoint research partition previews, duplicate source quarantine, and annotation disagreement inspection
-- [ ] Independently verified provenance, rights, annotator independence, and actual learned models
+- [x] Local first-order statistical phase-transition learning with group-held-out baseline comparisons
+- [ ] Independently verified provenance, rights, annotator independence, and externally validated learned models
 - [ ] Automatically aligned time annotations and editable waveform markers
 - [ ] Accessible graph connecting moments, signatures, and timings
 - [ ] Local-first PhiOS / PhiStream adapters (versioned JSON contract)

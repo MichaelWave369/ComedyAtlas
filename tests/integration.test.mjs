@@ -101,3 +101,22 @@ test("Research Pipeline refreshes after Evidence and Rhythm saves",()=>{
   assert.ok(lab.includes("comedyatlas:evidence-updated"));
   assert.ok(evidence.includes('document.dispatchEvent(new Event("comedyatlas:evidence-updated"))'));
 });
+
+test("Local Learning Lab mounts and has matching HTML control IDs",()=>{
+  const lab=read("src/learning-lab.mjs");
+  const ids=new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]));
+  for(const match of lab.matchAll(/\$\("([^"]+)"\)/g))
+    assert.ok(ids.has(match[1]),"Missing learning control: "+match[1]);
+  assert.ok(app.includes('import { mountLearningExperiment } from "./learning-lab.mjs"'));
+  assert.ok(app.includes("mountLearningExperiment()"));
+  assert.ok(html.includes('href="#learning"'));
+  assert.ok(html.includes('id="learning-confusion"'));
+  assert.ok(html.includes("not a trained model")||html.includes("not whether something is funny"));
+});
+test("Local experiment invalidates results on new Evidence/Rhythm annotations",()=>{
+  const lab=read("src/learning-lab.mjs");
+  assert.ok(lab.includes("comedyatlas:rhythms-updated"));
+  assert.ok(lab.includes("comedyatlas:evidence-updated"));
+  assert.ok(lab.includes("exportLearningReport"));
+  assert.ok(lab.includes("runLearningExperiment"));
+});
