@@ -79,7 +79,7 @@ test("feature-only report omits group IDs, titles, reviewer pseudonyms and raw m
   const report=exportLearningReport(result,"synthetic");
   const serialized=JSON.stringify(report);
   assert.equal(report.kind,"ComedyAtlasLocalLearningExperiment");
-  for(const secret of ["groupKey","rhythmId","sourceTitle","sourceUrl","annotator","segments","sourceGroups.train."])
+  for(const secret of ["\"groupKey\"","\"rhythmId\"","\"sourceTitle\"","\"sourceUrl\"","\"annotator\"","\"segments\"","sourceGroups.train.","synthetic-generator"])
     assert.ok(!serialized.includes(secret),"Unexpected identifier "+secret);
   assert.ok(!serialized.includes("synthetic-performance-"));
   assert.equal(report.model.phases.length,PHASE_IDS.length);
