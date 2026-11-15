@@ -22,13 +22,13 @@ function validIso(value){
   if(!Number.isFinite(d.valueOf())||d.toISOString()!==t)throw Error("Invalid timestamp.");
   return t;
 }
-export function normalizeEvidence(raw,allowedRhythms){
+export function normalizeEvidence(raw,allowedRhythms,{allowOrphans=false}={}){
   if(!raw||typeof raw!=="object"||Array.isArray(raw))throw Error("Evidence record must be an object.");
   if(!(allowedRhythms instanceof Set))throw Error("A set of saved rhythm IDs is required.");
   const id=field(raw.id,"Record ID",70);
   if(!/^evidence-[a-zA-Z0-9-]{8,60}$/.test(id))throw Error("Invalid evidence ID.");
   const rhythmId=field(raw.rhythmId,"Rhythm ID",70);
-  if(!allowedRhythms.has(rhythmId))throw Error("Linked rhythm is not in the saved notebook.");
+  if(!allowedRhythms.has(rhythmId)&&!allowOrphans)throw Error("Linked rhythm is not in the saved notebook.");
   const groupKey=field(raw.groupKey,"Source group key",64).toLowerCase();
   if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(groupKey))throw Error("Use a slug such as show-episode-01 for the source group.");
   const sourceTitle=field(raw.sourceTitle,"Source title",160);
@@ -53,14 +53,14 @@ export function normalizeEvidence(raw,allowedRhythms){
     createdAt:validIso(raw.createdAt)
   };
 }
-export function parseEvidence(text,allowedRhythms){
+export function parseEvidence(text,allowedRhythms,{allowOrphans=true}={}){
   if(typeof text!=="string"||text.length>MAX_EVIDENCE_BYTES)throw Error("Evidence backup exceeds 1 MB.");
   let data;
   try{data=JSON.parse(text);}catch{throw Error("Invalid JSON.");}
   if(!data||data.kind!==EVIDENCE_KIND||data.schemaVersion!==EVIDENCE_VERSION||!Array.isArray(data.records))
     throw Error("Unsupported evidence notebook format (expected version 1).");
   if(data.records.length>MAX_EVIDENCE)throw Error("Too many evidence records.");
-  const records=data.records.map(r=>normalizeEvidence(r,allowedRhythms));
+  const records=data.records.map(r=>normalizeEvidence(r,allowedRhythms,{allowOrphans}));
   if(new Set(records.map(r=>r.id)).size!==records.length)throw Error("Duplicate evidence IDs.");
   return records;
 }
