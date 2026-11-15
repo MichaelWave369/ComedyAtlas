@@ -6,7 +6,7 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 
 > The "Comedy Brain" is an interpretive map, **not a neuroscientific brain scan, clinical assessment, or objective measurement of talent**. The starter scores are editorial examples, not evidence-backed ratings. Humor is personal and contextual.
 
-## What works in v0.9
+## What works in v1.0 release candidate
 
 - Interactive nine-node Comedy Brain: select a mechanism to see its meaning, cues, and the performers it connects to.
 - Compare two example performance profiles on all nine signals, with a transparent weighted-vector similarity estimate.
@@ -41,6 +41,10 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 - Compare the learned Markov predictor against the same baseline on each held-out source group; report log-loss and accuracy advantages, split-sensitivity bands, source coverage and duplicate holdout counts.
 - Use paired resampling of **whole held-out source groups**, rather than misleading transition-level resampling, for exploratory within-split 10th–90th percentile ranges.
 - Export aggregate reliability results without media, source IDs, URLs, transcript text, user notes, or annotator identities.
+- **v1.0 RC Dataset Quality & Release Desk:** user-entered review decisions with a **source-family** label, separate from original-performance source groups; versioned local JSON import/export.
+- Explicitly label 36 synthetic demonstration examples as belonging to **four shared creative template families**; screen source groups independently from subjective permission claims.
+- Run a nested leave-one-family-out experiment. A complete family is held out from final testing, while smoothing is selected within the remaining families.
+- Export a minimal aggregate research preview without original source-family names, notes, or identity labels, and consult the release readiness criteria before a stable release.
 - Small, plain-JSON data model ready for contributions and later PhiOS/PhiStream integrations.
 
 ## Run locally
@@ -199,6 +203,18 @@ Open **Reliability**. The default cohort is the project's original synthetic exe
 - Repeatedly changing model features, hyperparameters or seed settings in response to results will overfit the study's pseudo-holdouts. A genuinely external, independent, consented evaluation cohort would be required for research claims.
 - The target remains the **next human-annotated comedy phase**, not subjective funniness, audience reaction, the meaning of a joke, or AI consciousness. A low error rate does not establish humor understanding.
 
+## Source Family Review Desk (v1.0 release candidate)
+
+Open **Release Desk**. The original synthetic demonstration contains 36 generated annotation sequences but only **four underlying authored pattern families**. The new family-held-out diagnostic measures how v0.8's first-order model handles a completely unseen creative template family, rather than merely different variants of known templates.
+
+For a personal dataset, review each **source group** in the local notebook, give every shared creative template or ancestry a stable **family key**, and select `approved`, `needs-review`, or `excluded`. You may leave the family key blank while a source is pending or excluded; approving it requires a family key. Add a reviewer pseudonym, declared origin and optional explanatory note. Approved status and claimed permission are **user assertions, not legal or scientific verification**. The existing Evidence notebook must also record permission claimed by the contributor for every selected source, or the group remains excluded from the experiment.
+
+A nested leave-one-family-out evaluation needs **at least six accepted source groups across at least three family keys**. For each held-out family, model smoothing is selected using internal comparisons between the *other* families. The held-out family is never used to fit the model or select smoothing. Each family counts equally when averaging results, but **this remains a local exploratory study, not an independent real-world benchmark**.
+
+The review ledger is stored locally as `ComedyAtlasReleaseReviews` schema 1. JSON backups cap at 1 MB / 250 decisions, and importing never silently replaces an existing group decision. Unreadable local storage is locked against replacement and a raw recovery backup is prepared before offering reset. The aggregate feature report excludes names and reviewer notes; the full review backup contains them and must be inspected before sharing.
+
+**Release criteria:** See [Research Release Readiness](docs/RELEASE_READINESS.md). Technical v1.0 RC is **not** a peer-reviewed claim about comedy, verified copyright permission or an official stable research dataset.
+
 ## Data shape
 
 Edit `data/atlas.json`:
@@ -234,6 +250,7 @@ The model intentionally separates **observation** (a bit uses repetition) from *
 - [x] Group-disjoint research partition previews, duplicate source quarantine, and annotation disagreement inspection
 - [x] Local first-order statistical phase-transition learning with group-held-out baseline comparisons
 - [x] Repeated source-group split sensitivity, paired group bootstrap ranges, and transparent baseline win rates
+- [x] Self-reported source-family review desk and nested family-heldout research diagnostics
 - [ ] Independently verified provenance, rights, annotator independence, and externally validated learned models
 - [ ] Automatically aligned time annotations and editable waveform markers
 - [ ] Accessible graph connecting moments, signatures, and timings
