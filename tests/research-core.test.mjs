@@ -92,9 +92,10 @@ test("drafts and orphan links stay out of split and manifest features",()=>{
 test("repeated same annotator is de-duplicated for disagreement and exported features",()=>{
   const {records,rhythms}=fixture(4);
   records.push(record(100,"source-0","reviewer-a",rhythms[0]));
-  records.push(record(101,"source-0","reviewer-b",rhythms[1]));
-  // Explicit source grouping intentionally ties these different rhythms to
-  // one source: a reviewer can annotate one original joke differently.
+  const variant={...rhythms[1],id:"rhythm-differentannotation01"};
+  rhythms.push(variant);
+  records.push(record(101,"source-0","reviewer-b",variant));
+  // The second annotator has a unique timeline ID but the same original source key.
   const rows=listReviewDisagreements(records,rhythms);
   assert.equal(rows.length,1);
   assert.equal(rows[0].annotatorCount,2);
@@ -115,7 +116,7 @@ test("split manifest contains only derived features and excludes URLs, pseudonym
   for(const forbidden of ["PRIVATE NOTE PLEASE DO NOT EXPORT","secret-permission","reviewer-a","sourceTitle","sourceUrl","segments"])
     assert.ok(!string.includes(forbidden),"Leaked "+forbidden);
   assert.ok(string.includes("groupKey"));
-  assert.ok(string.includes("Not")); // explicit disclaimer about rights
+  assert.ok(string.includes("No rights have been verified")); // explicit disclaimer about rights
 });
 test("claimed permissions are never reported as verified training authorization",()=>{
   const {records,rhythms}=fixture(6);
