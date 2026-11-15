@@ -109,11 +109,13 @@ test("split manifest contains only derived features and excludes URLs, pseudonym
   const {records,rhythms}=fixture(5);
   records[0].sourceUrl="https://example.org/secret-permission";
   records[0].note="PRIVATE NOTE PLEASE DO NOT EXPORT";
+  rhythms[0].title="PRIVATE TIMELINE TITLE";
+  rhythms[0].referenceLabel="PRIVATE SOURCE REFERENCE LABEL";
   const plan=planResearchSplits(records,rhythms);
   const pack=exportResearchPreview(plan,listReviewDisagreements(records,rhythms));
   const string=JSON.stringify(pack);
   assert.equal(pack.kind,"ComedyAtlasResearchSplitPreview");
-  for(const forbidden of ["PRIVATE NOTE PLEASE DO NOT EXPORT","secret-permission","reviewer-a","sourceTitle","sourceUrl","segments"])
+  for(const forbidden of ["PRIVATE NOTE PLEASE DO NOT EXPORT","secret-permission","reviewer-a","sourceTitle","sourceUrl","segments","PRIVATE TIMELINE TITLE","PRIVATE SOURCE REFERENCE LABEL"])
     assert.ok(!string.includes(forbidden),"Leaked "+forbidden);
   assert.ok(string.includes("groupKey"));
   assert.ok(string.includes("No rights have been verified")); // explicit disclaimer about rights
