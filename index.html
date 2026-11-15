@@ -590,12 +590,12 @@
           <div id="release-metrics" class="release-metrics" aria-label="Reviewed source-family inventory"></div>
           <div class="release-review-box">
             <h3>Source-family review ledger</h3>
-            <p class="fine-print">The fictional demo is read-only. For your personal corpus, add a decision for each original source key. Use the same family key for content descended from the same shared template, format, routine, or authored source material. This does not verify rights or independence.</p>
+            <p class="fine-print">The fictional demo is read-only. For your personal corpus, add a decision for each original source key. Use the same family key for content descended from the same shared template, format, routine, or authored source material. Leave family blank for unresolved or excluded sources; approval requires a documented key. This does not verify rights or independence.</p>
             <label for="release-source">Original source group<select id="release-source"></select></label>
             <p id="release-form-info" class="fine-print"></p>
             <form id="release-form">
               <div class="release-form-grid">
-                <label for="release-family">Shared creative family key<input id="release-family" placeholder="my-original-sketch-family-01" maxlength="64" required></label>
+                <label for="release-family">Shared creative family key<input id="release-family" placeholder="Optional until approved" maxlength="64"></label>
                 <label for="release-reviewer">Reviewer pseudonym<input id="release-reviewer" placeholder="reviewer-01" maxlength="60" required></label>
                 <label for="release-state">Local review decision<select id="release-state">
                   <option value="needs-review">Needs review</option><option value="approved">Approved for local research preview</option><option value="excluded">Exclude from research preview</option>

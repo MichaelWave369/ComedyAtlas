@@ -105,3 +105,11 @@ test("aggregate report removes source and family identifiers and free-text noteb
     assert.ok(!json.includes(secret),"Leaked "+secret);
   assert.throws(()=>exportFamilyBenchmark({}));
 });
+
+test("pending or excluded source reviews may leave family unknown; approved records may not",()=>{
+  const pending=normalizeReleaseReview({...reviews[0],status:"needs-review",familyKey:""});
+  assert.equal(pending.familyKey,"");
+  assert.equal(normalizeReleaseReview({...reviews[0],status:"excluded",familyKey:""}).familyKey,"");
+  assert.throws(()=>normalizeReleaseReview({...reviews[0],status:"approved",familyKey:""}),/documented creative family/);
+  assert.deepEqual(parseReleaseReviews(serializeReleaseReviews([pending])),[pending]);
+});

@@ -23,11 +23,12 @@ function slug(value,label){
 export function normalizeReleaseReview(raw){
   if(!raw||typeof raw!=="object"||Array.isArray(raw))throw Error("Review decision must be an object.");
   const groupKey=slug(raw.groupKey,"Source group key");
-  const familyKey=slug(raw.familyKey,"Underlying source family");
+  const familyKey=raw.familyKey===""||raw.familyKey===undefined ? "" : slug(raw.familyKey,"Underlying source family");
   const reviewer=limited(raw.reviewer,"Reviewer pseudonym",60);
   if(!/^[a-zA-Z0-9][a-zA-Z0-9._-]*$/.test(reviewer))
     throw Error("Reviewer pseudonym can contain only letters, digits, dots, underscores and hyphens.");
   if(!REVIEW_STATES.includes(raw.status))throw Error("Unknown review decision.");
+  if(raw.status==="approved"&&!familyKey)throw Error("Approved source groups require a documented creative family.");
   if(!SOURCE_ORIGINS.includes(raw.origin))throw Error("Unknown source origin.");
   const note=limited(raw.note??"","Review note",600,true);
   const updatedAt=limited(raw.updatedAt,"Review timestamp",40);
