@@ -11,5 +11,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: node --check src/app.mjs && node --check src/rhythm-studio.mjs && node --check src/rhythm-core.mjs && node --check src/studio.mjs && node --check src/audio-lab.mjs && node --check src/audio-core.mjs && node --check src/pattern-core.mjs && node --check src/pattern-lab.mjs && node --check src/evidence-core.mjs && node --check src/evidence-studio.mjs && node --check src/research-core.mjs && node --check src/research-lab.mjs && node --check src/learning-core.mjs && node --check src/learning-lab.mjs
+      - run: node --check src/app.mjs && node --check src/rhythm-studio.mjs && node --check src/rhythm-core.mjs && node --check src/studio.mjs && node --check src/audio-lab.mjs && node --check src/audio-core.mjs && node --check src/pattern-core.mjs && node --check src/pattern-lab.mjs && node --check src/evidence-core.mjs && node --check src/evidence-studio.mjs && node --check src/research-core.mjs && node --check src/research-lab.mjs && node --check src/learning-core.mjs && node --check src/learning-lab.mjs && node --check src/reliability-core.mjs && node --check src/reliability-lab.mjs
       - run: npm test

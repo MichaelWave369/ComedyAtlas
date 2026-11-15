@@ -6,7 +6,7 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 
 > The "Comedy Brain" is an interpretive map, **not a neuroscientific brain scan, clinical assessment, or objective measurement of talent**. The starter scores are editorial examples, not evidence-backed ratings. Humor is personal and contextual.
 
-## What works in v0.8
+## What works in v0.9
 
 - Interactive nine-node Comedy Brain: select a mechanism to see its meaning, cues, and the performers it connects to.
 - Compare two example performance profiles on all nine signals, with a transparent weighted-vector similarity estimate.
@@ -37,6 +37,10 @@ An open, exploratory atlas of comic mechanisms, performance styles, and rhythm. 
 - Tune smoothing only on validation source groups, report group-balanced accuracy/log-loss on held-out test groups, and inspect a confusion matrix and interactive phase probability predictions.
 - Try 36 entirely synthetic original demonstration sequences, or explicitly opt into your own saved reviewed annotation features (minimum six eligible source groups). No recordings are uploaded or used.
 - Download a minimal aggregate model/evaluation report that omits source names, original URLs, pseudonyms, free-text notes, and raw audio.
+- **Reliability Lab (v0.9):** repeat the entire source-group-disjoint training/validation/test evaluation across 12, 24 or 36 preconfigured deterministic splits.
+- Compare the learned Markov predictor against the same baseline on each held-out source group; report log-loss and accuracy advantages, split-sensitivity bands, source coverage and duplicate holdout counts.
+- Use paired resampling of **whole held-out source groups**, rather than misleading transition-level resampling, for exploratory within-split 10th–90th percentile ranges.
+- Export aggregate reliability results without media, source IDs, URLs, transcript text, user notes, or annotator identities.
 - Small, plain-JSON data model ready for contributions and later PhiOS/PhiStream integrations.
 
 ## Run locally
@@ -177,6 +181,24 @@ For a sequence of manually annotated comedy phases, predict the **next phase** f
 
 A more complicated model is **not automatically better**. The page explicitly reports when the learned model fails to beat the simple baseline on the test data.
 
+## Reliability Lab (v0.9)
+
+Open **Reliability**. The default cohort is the project's original synthetic exercise; switching to personal data is explicit. Personal evaluation requires at least **12 eligible reviewed, non-conflicting original-source groups**.
+
+1. Choose 12, 24, or 36 repetitions, a seed, and one of the existing source-group split ratios. Each repetition trains a fresh phase-transition model on train groups, selects its smoothing strength **using only validation groups**, and evaluates both the learned model and the majority baseline on the same held-out test groups.
+2. The **primary descriptive outcome** is group-balanced log-loss advantage: **baseline minus learned**. Positive means the learned model assigns higher probability to the annotated next phase. Group-balanced accuracy advantage is reported separately.
+3. View the mean advantage, the central 80% of observed split results (10th–90th percentiles), how many splits favored the model, the number of unique holdout partitions, and how many eligible original source groups were evaluated at least once.
+4. Each split also performs 240 deterministic **paired source-group bootstrap** resamples of its *held-out sources*, returning the 10th–90th percentile of the group-balanced log-loss gain. If fewer than three test groups are available, the bootstrap is not displayed. **These bands are exploratory descriptive variability estimates, not 95% confidence intervals.**
+5. Export `ComedyAtlasReliabilityStudyExport` schema 1. Exported data includes numeric per-split results, seeds, aggregate coverage counts, and warnings. It excludes actual source IDs, titles, pseudonyms, URLs, raw audio and notes; inspect before publishing.
+
+### Critical interpretation
+
+- These repeated splits have **overlapping** training and test sets. A particular source can be held out in several repetitions. This study is **not a newly independent external test set**, and split variation is **not** a calibrated confidence interval for a population.
+- The 36 demonstration timelines are descendants of only **four reusable synthetic templates**. Their source IDs are unique, but their **underlying pattern families are not independent**. Synthetic results do not show real-world generalization.
+- Group assignment relies on user-entered original-source keys, which can be wrong. Source rights, annotator independence and licenses are not independently verified.
+- Repeatedly changing model features, hyperparameters or seed settings in response to results will overfit the study's pseudo-holdouts. A genuinely external, independent, consented evaluation cohort would be required for research claims.
+- The target remains the **next human-annotated comedy phase**, not subjective funniness, audience reaction, the meaning of a joke, or AI consciousness. A low error rate does not establish humor understanding.
+
 ## Data shape
 
 Edit `data/atlas.json`:
@@ -211,6 +233,7 @@ The model intentionally separates **observation** (a bit uses repetition) from *
 - [x] User-entered source metadata, duplicate-source grouping, and structural annotation-agreement diagnostics (unverified)
 - [x] Group-disjoint research partition previews, duplicate source quarantine, and annotation disagreement inspection
 - [x] Local first-order statistical phase-transition learning with group-held-out baseline comparisons
+- [x] Repeated source-group split sensitivity, paired group bootstrap ranges, and transparent baseline win rates
 - [ ] Independently verified provenance, rights, annotator independence, and externally validated learned models
 - [ ] Automatically aligned time annotations and editable waveform markers
 - [ ] Accessible graph connecting moments, signatures, and timings
