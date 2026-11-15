@@ -12,8 +12,8 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <a class="wordmark" href="#top" aria-label="ComedyAtlas home"><span class="brand-symbol" aria-hidden="true">◉</span> COMEDY<span>ATLAS</span><span class="version"> / v0.7</span></a>
-    <nav aria-label="Main navigation"><a href="#brain">The Brain</a><a href="#signatures">Signatures</a><a href="#catalog">Atlas</a><a href="#studio">Studio</a><a href="#rhythm">Rhythm</a><a href="#audio-lab">Audio Lab</a><a href="#patterns">Patterns</a><a href="#evidence">Evidence</a><a href="#research">Research</a><a href="https://github.com/MichaelWave369/ComedyAtlas">GitHub ↗</a></nav>
+    <a class="wordmark" href="#top" aria-label="ComedyAtlas home"><span class="brand-symbol" aria-hidden="true">◉</span> COMEDY<span>ATLAS</span><span class="version"> / v0.8</span></a>
+    <nav aria-label="Main navigation"><a href="#brain">The Brain</a><a href="#signatures">Signatures</a><a href="#catalog">Atlas</a><a href="#studio">Studio</a><a href="#rhythm">Rhythm</a><a href="#audio-lab">Audio Lab</a><a href="#patterns">Patterns</a><a href="#evidence">Evidence</a><a href="#research">Research</a><a href="#learning">Learning</a><a href="https://github.com/MichaelWave369/ComedyAtlas">GitHub ↗</a></nav>
   </header>
 
   <main id="main">
@@ -421,6 +421,77 @@
           <h3>Why this matters</h3>
           <p class="fine-print">The same original performance appearing in training and test data can make evaluation results look better than they are. Grouped splitting reduces this one leakage route, but cannot discover mislabeled, reposted, edited or copied sources automatically. The URL check is conservative and can flag unrelated works on a shared page.</p>
           <p class="fine-print">No sources, rights or annotator identities have been independently audited. The export contains source keys, rhythm IDs and derived timing features, but not raw audio, transcripts, source URLs, reviewer pseudonyms or free-text notes. Inspect it before sharing.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="learning" class="section" aria-labelledby="learning-heading">
+      <div class="section-head">
+        <div><p class="eyebrow">11 / LOCAL LEARNING EXPERIMENT</p><h2 id="learning-heading">Predict the next beat.</h2></div>
+        <p>A small, explainable model learns annotated comedy structure, not whether something is funny.</p>
+      </div>
+      <div class="studio-intro">
+        <strong>The first actually fitted model.</strong> A first-order, smoothed transition model learns which annotated comedy phase tends to follow the preceding one. A simple majority-phase baseline keeps the experiment honest. Training, validation, and evaluation run in your browser on feature annotations only. No audio, transcripts, user tracking, or server training.
+      </div>
+      <div class="learning-layout">
+        <div class="learning-main">
+          <div class="learning-controls">
+            <label for="learning-cohort">Experiment dataset
+              <select id="learning-cohort">
+                <option value="synthetic">Original synthetic demonstration (36 examples)</option>
+                <option value="personal">My reviewed, saved source groups</option>
+              </select>
+            </label>
+            <label for="learning-ratio">Source-group partitions
+              <select id="learning-ratio">
+                <option value="balanced">60 / 20 / 20</option>
+                <option value="default" selected>70 / 15 / 15</option>
+                <option value="trainingHeavy">80 / 10 / 10</option>
+              </select>
+            </label>
+            <label for="learning-seed">Reproducible split seed
+              <input id="learning-seed" type="number" min="0" max="999999" step="1" value="369">
+            </label>
+          </div>
+          <div class="learning-buttons">
+            <button id="learning-run" type="button" class="primary-button">Run local experiment ↗</button>
+            <button id="learning-export" type="button" class="secondary-button" disabled>Export model report ↓</button>
+          </div>
+          <p id="learning-status" role="status" aria-live="polite">Ready to run locally.</p>
+          <p id="learning-start" class="fine-print">
+            Start with synthetic annotations generated entirely for this project. Your personal Evidence notebook is used only when explicitly selected; it needs at least six eligible source groups. Nothing is saved or uploaded automatically.
+          </p>
+          <div id="learning-results" hidden>
+            <p id="learning-size" class="learning-size"></p>
+            <p id="learning-alpha" class="fine-print"></p>
+            <p id="learning-example-note" class="fine-print"></p>
+            <h3>Validation: choose model smoothing</h3>
+            <p class="fine-print">Hyperparameters are selected by validation group-balanced log-loss, not test accuracy. Lower log-loss is better.</p>
+            <div id="learning-validation" class="learning-metrics"></div>
+            <h3>Held-out test: baseline vs learned model</h3>
+            <p class="fine-print">These groups were never used to fit transition counts or choose smoothing. Repeatedly changing seeds after looking at test performance weakens the meaning of a final held-out benchmark.</p>
+            <div id="learning-test-metrics" class="learning-metrics"></div>
+            <p id="learning-comparison" class="learning-comparison"></p>
+            <h3>Held-out confusion matrix</h3>
+            <div id="learning-confusion" class="learning-confusion" aria-label="Predicted versus annotated phases"></div>
+            <h3>Ask the fitted model</h3>
+            <label for="learning-context">Given this previous annotated phase, what could follow?
+              <select id="learning-context"></select>
+            </label>
+            <div id="learning-probabilities" class="learning-probabilities"></div>
+            <p id="learning-context-note" class="fine-print"></p>
+          </div>
+        </div>
+        <aside class="learning-sidebar">
+          <h3>What the computer learned</h3>
+          <p>A small statistical transition table. It uses the previous annotated phase to estimate probabilities for the next one.</p>
+          <h3>What it did not learn</h3>
+          <p>Humor quality, audience reaction, social meaning, spoken language, comic intention, or what makes a particular joke successful.</p>
+          <h3>The baseline</h3>
+          <p>A comparator trained on the same source groups that always predicts the most common next phase. A more complicated system should not be celebrated merely for existing.</p>
+          <h3>Research limits</h3>
+          <p>The original demonstration is synthetic and uses repeated template families, so its accuracy cannot be generalized to real comedy. For user data, source group independence and permissions are self-reported, not verified. This is an exploratory tool, not an authorization to train on third-party recordings.</p>
+          <p class="fine-print">Metric: group-balanced accuracy and log-loss, so each original source gets equal weight at evaluation even if it contains more annotated transitions.</p>
         </aside>
       </div>
     </section>
