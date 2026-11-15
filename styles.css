@@ -157,3 +157,6 @@
 #evidence-conclusion{border-top:1px solid var(--line);padding-top:1rem}
 @media(max-width:1080px){.evidence-layout{grid-template-columns:1fr}}
 @media(max-width:650px){.evidence-form,.evidence-notebook,.evidence-sidebar{padding:1.1rem}.evidence-form-grid{grid-template-columns:1fr}.evidence-form-grid .wide{grid-column:auto}.evidence-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.evidence-record{flex-direction:column}}
+
+/* Hidden recovery controls must override the shared inline-flex button style. */
+.evidence-actions button[hidden]{display:none}
