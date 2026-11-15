@@ -76,3 +76,9 @@ test("Pattern view distinguishes timeline counts from independent source groups"
   assert.ok(html.includes("Source-independent motifs"));
   assert.ok(html.includes("Independent examples are not simply separate files."));
 });
+
+test("Recovery UI does not appear unless unreadable evidence is detected",()=>{
+  const styles=read("styles.css");
+  assert.ok(html.includes('id="evidence-unlock"'));
+  assert.ok(styles.includes(".evidence-actions button[hidden]{display:none}"));
+});
