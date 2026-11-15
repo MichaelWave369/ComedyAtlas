@@ -91,7 +91,8 @@ test("Research Pipeline initializes and every referenced DOM control exists",()=
   assert.ok(app.includes('import { mountResearchPipeline } from "./research-lab.mjs"'));
   assert.ok(app.includes("mountResearchPipeline()"));
   assert.ok(html.includes('href="#research"'));
-  assert.ok(html.includes("train/validation/test") || html.includes("train, validation, or test"));
+  assert.ok(html.includes('id="research-partitions"'));
+  assert.ok(html.includes("not a trained model or permission to train"));
 });
 test("Research Pipeline refreshes after Evidence and Rhythm saves",()=>{
   const lab=read("src/research-lab.mjs");
