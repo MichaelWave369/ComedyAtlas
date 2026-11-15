@@ -139,3 +139,22 @@ test("Reliability Lab clears stale personal results after annotation changes",()
   assert.ok(lab.includes("exportReliabilityStudy"));
   assert.ok(lab.includes("runReliabilityStudy"));
 });
+
+test("Release candidate review and benchmark controls exist and mount",()=>{
+  const lab=read("src/release-lab.mjs");
+  const ids=new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]));
+  for(const match of lab.matchAll(/\$\("([^"]+)"\)/g))
+    assert.ok(ids.has(match[1]),"Missing Release Desk target: "+match[1]);
+  assert.ok(app.includes('import { mountReleaseWorkbench } from "./release-lab.mjs"'));
+  assert.ok(app.includes("mountReleaseWorkbench()"));
+  assert.ok(html.includes('href="#release"'));
+  assert.ok(html.includes('id="release-results" hidden'));
+  assert.ok(html.includes("Every review and permission claim is user-entered and unverified."));
+});
+test("Release Desk invalidates old results on Evidence/Rhythm changes",()=>{
+  const lab=read("src/release-lab.mjs");
+  assert.ok(lab.includes("comedyatlas:rhythms-updated"));
+  assert.ok(lab.includes("comedyatlas:evidence-updated"));
+  assert.ok(lab.includes("runFamilyHoldoutBenchmark"));
+  assert.ok(lab.includes("exportFamilyBenchmark"));
+});

@@ -8,6 +8,7 @@ import { mountEvidenceWorkbench } from "./evidence-studio.mjs";
 import { mountResearchPipeline } from "./research-lab.mjs";
 import { mountLearningExperiment } from "./learning-lab.mjs";
 import { mountReliabilityLab } from "./reliability-lab.mjs";
+import { mountReleaseWorkbench } from "./release-lab.mjs";
 
 const $ = (id) => document.getElementById(id);
 const state = { atlas:null, active:"timing", first:"norm", second:"tim", query:"", mechanism:"all", observations:[], signatureMode:"editorial" };
@@ -139,6 +140,7 @@ function setup() {
   mountResearchPipeline();
   mountLearningExperiment();
   mountReliabilityLab();
+  mountReleaseWorkbench();
 }
 async function init() {
   try {

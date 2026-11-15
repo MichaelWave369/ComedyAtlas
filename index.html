@@ -12,8 +12,8 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <a class="wordmark" href="#top" aria-label="ComedyAtlas home"><span class="brand-symbol" aria-hidden="true">◉</span> COMEDY<span>ATLAS</span><span class="version"> / v0.9</span></a>
-    <nav aria-label="Main navigation"><a href="#brain">The Brain</a><a href="#signatures">Signatures</a><a href="#catalog">Atlas</a><a href="#studio">Studio</a><a href="#rhythm">Rhythm</a><a href="#audio-lab">Audio Lab</a><a href="#patterns">Patterns</a><a href="#evidence">Evidence</a><a href="#research">Research</a><a href="#learning">Learning</a><a href="#reliability">Reliability</a><a href="https://github.com/MichaelWave369/ComedyAtlas">GitHub ↗</a></nav>
+    <a class="wordmark" href="#top" aria-label="ComedyAtlas home"><span class="brand-symbol" aria-hidden="true">◉</span> COMEDY<span>ATLAS</span><span class="version"> / v1.0 RC</span></a>
+    <nav aria-label="Main navigation"><a href="#brain">The Brain</a><a href="#signatures">Signatures</a><a href="#catalog">Atlas</a><a href="#studio">Studio</a><a href="#rhythm">Rhythm</a><a href="#audio-lab">Audio Lab</a><a href="#patterns">Patterns</a><a href="#evidence">Evidence</a><a href="#research">Research</a><a href="#learning">Learning</a><a href="#reliability">Reliability</a><a href="#release">Release Desk</a><a href="https://github.com/MichaelWave369/ComedyAtlas">GitHub ↗</a></nav>
   </header>
 
   <main id="main">
@@ -563,6 +563,92 @@
           <p id="reliability-demo-note" class="fine-print">The original synthetic examples reuse four fictional template families, so strong results cannot establish generalization to real comedy.</p>
           <ul id="reliability-warnings" class="reliability-warnings"></ul>
           <p class="fine-print">No comedy-quality score, speech recognition, audio upload, paid service or external model is involved. Rights and source independence are not independently verified.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="release" class="section" aria-labelledby="release-heading">
+      <div class="section-head">
+        <div><p class="eyebrow">13 / v1.0 RELEASE CANDIDATE</p><h2 id="release-heading">Review the evidence.</h2></div>
+        <p>Group related performances by creative lineage, review their provenance, and test without borrowing from the same family.</p>
+      </div>
+      <div class="studio-intro">
+        <strong>Original sources aren't always independent creative ideas.</strong> A repost, remix, and original clip may share one performance, while different performances may share a common template. The v1.0 Source Family Review Desk adds another layer: explicitly label related source families, quarantine conflicts, and withhold whole families during evaluation. Every review and permission claim is user-entered and unverified.
+      </div>
+      <div class="release-layout">
+        <div class="release-main">
+          <div class="release-top-controls">
+            <label for="release-cohort">Study corpus
+              <select id="release-cohort">
+                <option value="synthetic">Original synthetic exercise (36 examples, 4 template families)</option>
+                <option value="personal">My saved Evidence and Rhythm notebooks</option>
+              </select>
+            </label>
+            <button id="release-refresh" type="button" class="secondary-button">Refresh saved notebooks</button>
+          </div>
+          <p id="release-status" role="status" aria-live="polite">Loading research review…</p>
+          <div id="release-metrics" class="release-metrics" aria-label="Reviewed source-family inventory"></div>
+          <div class="release-review-box">
+            <h3>Source-family review ledger</h3>
+            <p class="fine-print">The fictional demo is read-only. For your personal corpus, add a decision for each original source key. Use the same family key for content descended from the same shared template, format, routine, or authored source material. This does not verify rights or independence.</p>
+            <label for="release-source">Original source group<select id="release-source"></select></label>
+            <p id="release-form-info" class="fine-print"></p>
+            <form id="release-form">
+              <div class="release-form-grid">
+                <label for="release-family">Shared creative family key<input id="release-family" placeholder="my-original-sketch-family-01" maxlength="64" required></label>
+                <label for="release-reviewer">Reviewer pseudonym<input id="release-reviewer" placeholder="reviewer-01" maxlength="60" required></label>
+                <label for="release-state">Local review decision<select id="release-state">
+                  <option value="needs-review">Needs review</option><option value="approved">Approved for local research preview</option><option value="excluded">Exclude from research preview</option>
+                </select></label>
+                <label for="release-origin">Self-declared source origin<select id="release-origin">
+                  <option value="unknown">Unknown</option><option value="original">Original / self-authored</option><option value="permitted">Permission claimed (not verified)</option><option value="reference-only">Reference only</option><option value="synthetic">Entirely synthetic</option>
+                </select></label>
+                <label class="full" for="release-note">Review notes and unresolved concerns<textarea id="release-note" rows="3" maxlength="600" placeholder="Describe source lineage, permission basis, and unresolved uncertainty without copying scripts."></textarea></label>
+              </div>
+              <div class="release-buttons">
+                <button id="release-add" class="primary-button" type="submit">Save local review decision</button>
+                <button id="release-delete" class="danger-button" type="button">Remove this decision</button>
+              </div>
+            </form>
+            <div class="release-buttons">
+              <button id="release-export-ledger" type="button" class="secondary-button">Export full review ledger ↓</button>
+              <label class="import-label" for="release-import">Import review ledger<input type="file" id="release-import" accept=".json,application/json"></label>
+              <button id="release-recovery" class="danger-button" type="button" hidden>Recover unreadable ledger</button>
+            </div>
+            <p id="release-count" class="fine-print"></p>
+            <p class="fine-print">The full review backup may contain reviewer pseudonyms, source-family keys and private notes. The aggregate benchmark export deliberately omits them.</p>
+          </div>
+          <div class="release-benchmark-box">
+            <h3>Family-held-out evaluation</h3>
+            <p class="fine-print">Unlike the earlier source-group random splits, every fold withholds an entire common creative family. Model smoothing is selected from the remaining families only. At least six accepted sources in three different families are required.</p>
+            <div class="release-buttons">
+              <button id="release-benchmark-run" type="button" class="primary-button">Run family-held-out benchmark ↗</button>
+              <button id="release-export-results" type="button" class="secondary-button" disabled>Export aggregate results ↓</button>
+            </div>
+            <div id="release-results" hidden>
+              <div class="release-headline-metrics">
+                <div><span>Average baseline-minus-model log-loss</span><strong id="release-gain">—</strong><p id="release-gain-note" class="fine-print"></p></div>
+                <div><span>Families where learned model wins</span><strong id="release-win-count">—</strong><p class="fine-print">Descriptive across very few families, not a confidence interval.</p></div>
+              </div>
+              <div class="release-table-scroll">
+                <table class="release-fold-table">
+                  <caption>One held-out family per fold, with nested validation over remaining families</caption>
+                  <thead><tr><th scope="col">Held-out family</th><th scope="col">Train families</th><th scope="col">Test sources</th><th scope="col">Smoothing</th><th scope="col">Baseline loss</th><th scope="col">Learned loss</th><th scope="col">Model advantage</th></tr></thead>
+                  <tbody id="release-folds"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside class="release-side">
+          <h3>Local screening checklist</h3>
+          <ul id="release-checklist" class="evidence-checks"></ul>
+          <p id="release-readiness" class="fine-print"></p>
+          <h3>Excluded / unresolved sources</h3>
+          <ul id="release-exclusions" class="release-exclusions"></ul>
+          <h3>What a v1.0 release does not claim</h3>
+          <p class="fine-print">A green technical build is not evidence that copyright permissions, reviewer independence, statistical uncertainty, or cultural diversity were independently verified. Even a family-held-out synthetic benchmark does not prove real-world humor understanding.</p>
+          <p class="fine-print">Before a stable research release: independently confirm rights and source lineage, assemble a diverse consented human benchmark, run accessibility and browser checks, and freeze external evaluation data. See the release-readiness document in the repository.</p>
         </aside>
       </div>
     </section>

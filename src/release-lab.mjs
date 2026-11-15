@@ -62,8 +62,7 @@ export function mountReleaseWorkbench(){
     const personal=cohortInput.value==="personal";
     const selected=selection.value;
     const current=currentReview();
-    const old=$("release-family").value;
-    $("release-family").value=current?.familyKey||old||"";
+    $("release-family").value=current?.familyKey||"";
     $("release-state").value=current?.status||"needs-review";
     $("release-origin").value=current?.origin||"unknown";
     $("release-reviewer").value=current?.reviewer||$("release-reviewer").value||"";

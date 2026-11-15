@@ -256,3 +256,42 @@
 @media(max-width:1080px){.reliability-layout{grid-template-columns:1fr}}
 @media(max-width:700px){.reliability-main,.reliability-side{padding:1.1rem}.reliability-controls{grid-template-columns:1fr 1fr}.reliability-stats,.reliability-summary{grid-template-columns:1fr 1fr}}
 @media(max-width:410px){.reliability-controls,.reliability-stats,.reliability-summary{grid-template-columns:1fr}}
+
+/* v1.0 release-candidate family review and audit */
+.release-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(275px,.75fr);gap:1rem;align-items:start}
+.release-main,.release-side{min-width:0}
+.release-top-controls,.release-review-box,.release-benchmark-box,.release-side{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:1.6rem}
+.release-top-controls{display:flex;flex-wrap:wrap;align-items:end;gap:1rem}
+.release-top-controls label{flex:1;min-width:260px}
+#release-status{background:var(--surface2);border:1px solid var(--line);border-radius:7px;color:var(--mint);padding:1rem;font-size:.8rem;line-height:1.55}
+#release-status[data-error=true]{border-color:#915465;color:#ffb9c4}
+.release-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;margin:1rem 0}
+.release-metrics>div{display:flex;flex-direction:column;gap:.5rem;padding:1rem;border:1px solid var(--line);background:var(--surface2);border-radius:8px}
+.release-metrics strong{font-size:1.6rem;font-variant-numeric:tabular-nums;color:var(--mint)}
+.release-metrics span{font-size:.7rem;line-height:1.5;color:var(--muted)}
+.release-review-box,.release-benchmark-box{margin:1rem 0}
+.release-review-box h3,.release-benchmark-box h3,.release-side h3{font-size:1.18rem;margin:0 0 1rem}
+.release-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;margin:1rem 0}
+.release-form-grid label.full{grid-column:1/-1}
+.release-form-grid textarea{font:inherit;resize:vertical;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:.8rem;min-height:85px}
+.release-buttons{display:flex;flex-wrap:wrap;align-items:center;gap:.65rem;margin:1rem 0}
+.release-buttons button:disabled{cursor:not-allowed;opacity:.4}
+.release-buttons #release-recovery[hidden]{display:none}
+.release-headline-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;margin:1.4rem 0}
+.release-headline-metrics>div{padding:1rem;background:var(--surface2);border:1px solid var(--line);border-radius:8px}
+.release-headline-metrics span{font-size:.77rem;line-height:1.5}
+.release-headline-metrics strong{display:block;font-size:2rem;color:var(--accent);font-variant-numeric:tabular-nums;margin:.5rem 0}
+.release-table-scroll{max-width:100%;overflow:auto}
+.release-fold-table{width:100%;min-width:790px;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.74rem}
+.release-fold-table caption{text-align:left;color:var(--muted);font-size:.76rem;padding:.8rem}
+.release-fold-table th,.release-fold-table td{text-align:right;border-bottom:1px solid var(--line);padding:.7rem .5rem}
+.release-fold-table th{background:var(--surface2)}
+.release-fold-table td:first-child,.release-fold-table th:first-child{text-align:left}
+#release-results[hidden]{display:none}
+.release-side{position:relative}
+.release-side h3:not(:first-child){margin-top:2rem}
+.release-side p{line-height:1.75}
+.release-exclusions{list-style:none;padding:0;margin:1rem 0;display:grid;gap:.6rem;max-height:520px;overflow:auto}
+.release-exclusions li{border:1px solid var(--line);padding:.7rem;border-radius:6px;background:var(--surface2);color:var(--muted);font-size:.76rem;line-height:1.6;overflow-wrap:anywhere}
+@media(max-width:1050px){.release-layout{grid-template-columns:1fr}}
+@media(max-width:650px){.release-top-controls,.release-review-box,.release-benchmark-box,.release-side{padding:1.1rem}.release-form-grid{grid-template-columns:1fr}.release-form-grid label.full{grid-column:auto}.release-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.release-headline-metrics{grid-template-columns:1fr}}

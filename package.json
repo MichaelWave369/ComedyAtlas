@@ -1,6 +1,6 @@
 {
   "name": "comedy-atlas",
-  "version": "0.1.0",
+  "version": "1.0.0-rc.1",
   "private": true,
   "type": "module",
   "description": "An open exploratory atlas of comic mechanisms and rhythm",
